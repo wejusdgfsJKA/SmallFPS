@@ -7,7 +7,7 @@ public class CheckPoint : MonoBehaviour
     {
         if (ActiveCheckpoint != gameObject)
         {
-            ActiveCheckpoint.SetActive(false);
+            ActiveCheckpoint?.SetActive(false);
             ActiveCheckpoint = gameObject;
         }
     }
