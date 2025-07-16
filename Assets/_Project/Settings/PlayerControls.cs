@@ -29,7 +29,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""PassThrough"",
+                    ""Type"": ""PassThrough"",
                     ""id"": ""fa610884-35f2-4b51-9837-f0192c622223"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -38,7 +38,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Look"",
-                    ""type"": ""PassThrough"",
+                    ""Type"": ""PassThrough"",
                     ""id"": ""228403d4-70df-4493-b6b2-ae9f2cc0189c"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -47,7 +47,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Interact"",
-                    ""type"": ""Button"",
+                    ""Type"": ""Button"",
                     ""id"": ""09f83003-7490-4d77-82ec-e351b535400d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -56,7 +56,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Jump"",
-                    ""type"": ""Button"",
+                    ""Type"": ""Button"",
                     ""id"": ""58c36bdf-8e49-40fe-b68d-64d703c75a17"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -65,7 +65,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Weapon0"",
-                    ""type"": ""Value"",
+                    ""Type"": ""Value"",
                     ""id"": ""0b7b973f-8da3-4755-ae30-028d0e1744af"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -74,7 +74,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Escape"",
-                    ""type"": ""Button"",
+                    ""Type"": ""Button"",
                     ""id"": ""b2bf5325-051a-4f3c-aaed-bc861c205a25"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

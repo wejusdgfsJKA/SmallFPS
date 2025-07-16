@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98fe33517d396434488c8f873eb971e4, type: 3}
+  m_Name: RifleBullet
+  m_EditorClassIdentifier: 
+  Type: 0
+  Prefab: {fileID: 58382331521903002, guid: 4c5c678a9bec15343b71147220d5ccae, type: 3}
+  Damage: 1
+  AudioClip: {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2, type: 3}
+  HitMask:
+    serializedVersion: 2
+    m_Bits: 65
+  Range: 100

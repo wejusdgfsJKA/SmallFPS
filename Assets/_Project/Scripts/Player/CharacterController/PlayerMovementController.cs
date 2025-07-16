@@ -25,7 +25,7 @@ public class PlayerMovementController : ValidatedMonoBehaviour
 
     private void OnDisable()
     {
-        GameManager.Instance.RespawnPlayer();
+        GameManager.Instance?.RespawnPlayer();
     }
     private void OnDestroy()
     {

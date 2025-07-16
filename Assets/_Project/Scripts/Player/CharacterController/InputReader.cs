@@ -9,7 +9,7 @@ public interface IInputReader
     void EnablePlayerActions();
 }
 
-[CreateAssetMenu(fileName = "InputReader", menuName = "InputReader")]
+[CreateAssetMenu(fileName = "InputReader", menuName = "ScriptableObjects/InputReader")]
 public class InputReader : ScriptableObject, IPlayerActions, IInputReader
 {
     public event UnityAction<Vector2> Move = delegate { };
@@ -17,17 +17,26 @@ public class InputReader : ScriptableObject, IPlayerActions, IInputReader
     public event UnityAction Jump = delegate { };
     public event UnityAction Interact = delegate { };
     public event UnityAction Escape = delegate { };
-    public event UnityAction<InputAction.CallbackContext, int> Weapon = delegate { }; public PlayerControls inputActions;
-    public Vector2 Direction => inputActions.Player.Move.ReadValue<Vector2>();
-    public Vector2 LookDirection => inputActions.Player.Look.ReadValue<Vector2>();
-    public string InteractKey => inputActions.Player.Interact.GetBindingDisplayString();
+    public event UnityAction<InputAction.CallbackContext, int> Weapon = delegate { };
+    protected PlayerControls inputActions;
+    public PlayerControls InputActions
+    {
+        get
+        {
+            if (inputActions == null)
+            {
+                inputActions = new PlayerControls();
+                inputActions.Player.SetCallbacks(this);
+                inputActions.Enable();
+            }
+            return inputActions;
+        }
+    }
+    public Vector2 Direction => InputActions.Player.Move.ReadValue<Vector2>();
+    public Vector2 LookDirection => InputActions.Player.Look.ReadValue<Vector2>();
+    public string InteractKey => InputActions.Player.Interact.GetBindingDisplayString();
     public void EnablePlayerActions()
     {
-        if (inputActions == null)
-        {
-            inputActions = new PlayerControls();
-            inputActions.Player.SetCallbacks(this);
-        }
         inputActions.Enable();
     }
     public void DisablePlayerActions()

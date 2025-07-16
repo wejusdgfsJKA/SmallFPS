@@ -21,11 +21,20 @@ namespace Entity
         /// All entities the manager can spawn.
         /// </summary>
         protected Dictionary<EntityType, EntityData> roster { get; } = new();
+        /// <summary>
+        /// Transform of currently active player.
+        /// </summary>
+        public Transform Player { get; protected set; }
+        [SerializeField] List<EntityData> rosterEntries = new();
         protected void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
+            }
+            for (int i = 0; i < rosterEntries.Count; i++)
+            {
+                roster.Add(rosterEntries[i].Type, rosterEntries[i]);
             }
         }
         /// <summary>
@@ -35,7 +44,15 @@ namespace Entity
         /// <returns>True if registration successfull.</returns>
         public bool Register(EntityBase entity)
         {
-            return Entities.TryAdd(entity.transform.GetInstanceID(), entity);
+            if (Entities.TryAdd(entity.transform.GetInstanceID(), entity))
+            {
+                if (entity.Type == EntityType.Player)
+                {
+                    Player = entity.transform;
+                }
+                return true;
+            }
+            return false;
         }
         public EntityBase Spawn(EntityType entityType, Transform transform)
         {
@@ -44,7 +61,7 @@ namespace Entity
         /// <summary>
         /// Spawn a new enemy, or get one from the entity pool. The spawned enemy will be inactive.
         /// </summary>
-        /// <param name="id">The id of the enemy (it's type, not its unique identifier).</param>
+        /// <param name="id">The id of the enemy (it's Type, not its unique identifier).</param>
         /// <param name="position">Spawn position.</param>
         /// <returns>An instance of the enemy if existing pool/roster entry was found, null otherwise</returns>
         public EntityBase Spawn(EntityType id, Vector3 position)
@@ -54,7 +71,7 @@ namespace Entity
         /// <summary>
         /// Spawn a new enemy, or get one from the entity pool. The spawned enemy will be inactive.
         /// </summary>
-        /// <param name="id">The id of the enemy (it's type, not its unique identifier).</param>
+        /// <param name="id">The id of the enemy (it's Type, not its unique identifier).</param>
         /// <param name="position">Spawn position.</param>
         /// <param name="rotation">Spawn rotation.</param>
         /// <returns>An instance of the enemy if existing pool/roster entry was found, null otherwise</returns>
@@ -76,7 +93,6 @@ namespace Entity
                     return null;
                 }
             }
-            e.transform.SetParent(null);
             return e;
         }
         /// <summary>
@@ -86,20 +102,6 @@ namespace Entity
         protected void AddToPool(EntityBase entity)
         {
             multiPool.Release(entity);
-            entity.transform.SetParent(transform);
-        }
-        /// <summary>
-        /// Send an attack to an entity.
-        /// </summary>
-        /// <param name="entity">The root transform of the attacked entity.</param>
-        /// <param name="dmgInfo">The damage package.</param>
-        public void SendAttack(Transform entity, DmgInfo dmgInfo)
-        {
-            EntityBase b;
-            if (Entities.TryGetValue(entity.GetInstanceID(), out b))
-            {
-                b.TakeDamage(dmgInfo);
-            }
         }
         /// <summary>
         /// This entity just died, will be added to the pool.
@@ -107,6 +109,10 @@ namespace Entity
         /// <param name="entity">The entity that died.</param>
         public void DeRegister(EntityBase entity)
         {
+            if (entity.Type == EntityType.Player)
+            {
+                Player = null;
+            }
             Entities.Remove(entity.transform.GetInstanceID());
             AddToPool(entity);
         }

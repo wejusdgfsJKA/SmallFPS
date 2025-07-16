@@ -1,8 +1,15 @@
 using Pooling;
+using System.Collections;
 using UnityEngine;
 
 namespace Weapon
 {
+    public enum BulletType
+    {
+        RifleBullet,
+        RifleBeam,
+        Explosion
+    }
     public class BulletManager : MonoBehaviour
     {
         public static BulletManager Instance { get; private set; }
@@ -20,13 +27,18 @@ namespace Weapon
             if (b == null)
             {
                 b = Instantiate(data.Prefab);
-                b.Parameters = data;
+                b.Init(data);
             }
             return b;
         }
         public void Release(Bullet bullet)
         {
             multiPool.Release(bullet);
+            StartCoroutine(Reattach(bullet.transform));
+        }
+        IEnumerator Reattach(Transform tr)
+        {
+            yield return null;
         }
     }
 }

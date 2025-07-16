@@ -3,15 +3,13 @@ using Utilities;
 
 namespace Weapon
 {
-    public enum BulletType
-    {
-        RifleBullet,
-        RifleBeam
-    }
     public class WeaponBase : MonoBehaviour
     {
 
         #region Fields
+        protected RaycastHit hit;
+        protected LayerMask targetMask = 1 << 0 | 1 << 6;
+        [SerializeField] protected WeaponData weaponData;
         public WeaponData Parameters
         {
             set
@@ -23,6 +21,7 @@ namespace Weapon
                 altFireCost = value.AltFireCost;
                 bullet = value.Bullet;
                 altBullet = value.AltBullet;
+                targetMask = value.TargetMask;
                 ResetWeapon();
             }
         }
@@ -35,7 +34,7 @@ namespace Weapon
         /// <summary>
         /// Maximum ammo of the weapon.
         /// </summary>
-        [SerializeField] protected float maxAmmo;
+        protected float maxAmmo;
         /// <summary>
         /// Maximum ammo of the weapon.
         /// </summary>
@@ -46,7 +45,7 @@ namespace Weapon
                 return maxAmmo;
             }
         }
-        [SerializeField] protected float ammo;
+        protected float ammo;
         /// <summary>
         /// Current ammo of the weapon.
         /// </summary>
@@ -87,10 +86,16 @@ namespace Weapon
         /// How much ammo does it cost per alternate shot.
         /// </summary>
         protected float altFireCost;
+        protected AudioSource audioSource;
         #endregion
         protected virtual void Awake()
         {
-            shootPoint = transform;
+            audioSource = GetComponent<AudioSource>();
+            if (shootPoint == null)
+            {
+                shootPoint = transform;
+            }
+            Parameters = weaponData;
         }
         /// <summary>
         /// Reset the ammo of the weapon.
@@ -196,9 +201,18 @@ namespace Weapon
         }
         protected void FireBullet(BulletData bulletData)
         {
-            var b = BulletManager.Instance.GetBullet(altBullet);
-            b.transform.SetPositionAndRotation(transform.position, transform.rotation);
+            var b = BulletManager.Instance.GetBullet(bulletData);
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 100, targetMask))
+            {
+                shootPoint.LookAt(hit.point);
+            }
+            else
+            {
+                shootPoint.LookAt(transform.forward * 100);
+            }
+            b.transform.SetPositionAndRotation(shootPoint.position, shootPoint.rotation);
             b.Owner = transform;
+            audioSource.PlayOneShot(bulletData.AudioClip);
             b.gameObject.SetActive(true);
         }
     }

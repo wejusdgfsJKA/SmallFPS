@@ -13,5 +13,6 @@ namespace Weapon
         public float AltFireCost;
         public BulletData Bullet;
         public BulletData AltBullet;
+        public LayerMask TargetMask = 1 << 0 | 1 << 6;
     }
 }

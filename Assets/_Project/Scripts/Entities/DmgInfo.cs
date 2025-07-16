@@ -1,9 +1,10 @@
+using EventBus;
 using UnityEngine;
 
 /// <summary>
 /// Damage package.
 /// </summary>
-public struct DmgInfo
+public struct DmgInfo : IEvent
 {
     /// <summary>
     /// How much damage this attack has dealt.

@@ -27,14 +27,20 @@ public class Encounter : MonoBehaviour
     {
         Completed = false;
     }
+    /// <summary>
+    /// Begin spawning the entities in this encounter.
+    /// </summary>
     public void StartEncounter()
     {
-        entityCount = entities.Count;
-        for (int i = 0; i < entityCount; i++)
+        if (!Completed)
         {
-            //spawn this entity
-            var e = EntityManager.Instance.Spawn(entities[i], spawnStrategy.GetSpawnPoint());
-            EventBus<OnDeath>.AddActions(e.transform.GetInstanceID(), null, OnEntityDeath);
+            entityCount = entities.Count;
+            for (int i = 0; i < entityCount; i++)
+            {
+                //spawn this entity
+                var e = EntityManager.Instance.Spawn(entities[i], spawnStrategy.GetSpawnPoint());
+                EventBus<OnDeath>.AddActions(e.transform.GetInstanceID(), null, OnEntityDeath);
+            }
         }
     }
     public void OnEntityDeath()

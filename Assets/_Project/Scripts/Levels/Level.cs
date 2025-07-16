@@ -17,13 +17,17 @@ public class Level : MonoBehaviour
     public void CheckpointReached()
     {
         //clear completed encounters
+        encounters.RemoveWhere(e => e.Completed);
     }
     public void ResetEncounters()
     {
-
+        foreach (var item in encounters)
+        {
+            item.ResetEncounter();
+        }
     }
     public void LevelFinished()
     {
-
+        GameManager.Instance.NextLevel();
     }
 }

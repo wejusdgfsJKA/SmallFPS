@@ -1,4 +1,3 @@
-using Detection;
 using EventBus;
 using Pooling;
 using System;
@@ -6,11 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Entity
 {
-    public class EntityBase : DetectableTarget, Identifiable<EntityType>
+    public class EntityBase : MonoBehaviour, Identifiable<EntityType>
     {
         #region Fields
         protected int maxHealth;
-        protected EntityType type;
+        public EntityType Type { get; protected set; }
         /// <summary>
         /// Set the entity's parameters.
         /// </summary>
@@ -18,7 +17,7 @@ namespace Entity
         {
             set
             {
-                type = value.Type;
+                Type = value.Type;
                 maxHealth = value.MaxHealth;
             }
         }
@@ -30,15 +29,14 @@ namespace Entity
         {
             get
             {
-                return type;
+                return Type;
             }
         }
 
         protected List<Type> eventBindings = new() { typeof(OnDamageTaken), typeof(OnDeath) };
         #endregion
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
             //register events
             RegisterEventBindings();
             //register entity
@@ -60,9 +58,9 @@ namespace Entity
         /// </summary>
         /// <param name="dmgInfo">Damage package.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void TakeDamage(DmgInfo dmgInfo)
+        public void TakeDamage(TakeDamage @event)
         {
-            EventBus<OnDamageTaken>.Raise(transform.GetInstanceID(), new OnDamageTaken(dmgInfo, this));
+            EventBus<OnDamageTaken>.Raise(transform.GetInstanceID(), new OnDamageTaken(@event.DmgInfo, this));
             throw new System.NotImplementedException();
         }
         /// <summary>
@@ -74,11 +72,12 @@ namespace Entity
             EventBus<OnDeath>.Raise(transform.GetInstanceID(), new OnDeath(dmgInfo, this));
             transform.root.gameObject.SetActive(false);
         }
-        public override void RegisterEventBindings()
+        public void RegisterEventBindings()
         {
             EventBus<OnDamageTaken>.AddBinding(transform.GetInstanceID());
             EventBus<OnDeath>.AddBinding(transform.GetInstanceID());
             EventBus<TakeDamage>.AddBinding(transform.GetInstanceID());
+            EventBus<TakeDamage>.AddActions(transform.GetInstanceID(), TakeDamage);
         }
         protected void OnDisable()
         {
