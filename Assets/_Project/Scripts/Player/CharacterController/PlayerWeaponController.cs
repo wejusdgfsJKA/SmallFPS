@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
-
+using Weapon;
 public class PlayerWeaponController : MonoBehaviour
 {
     [SerializeField] protected InputReader inputReader;
-    [SerializeField] protected List<Weapon> weapons = new();
+    [SerializeField] protected List<WeaponBase> weapons = new();
     [SerializeField] protected List<Transform> ammoDisplays = new();
     protected List<System.Action<float>> ammoValueChangedHandlers = new();
     private void OnEnable()

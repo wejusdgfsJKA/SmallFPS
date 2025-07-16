@@ -21,28 +21,15 @@ namespace Detection
         public float CurrentSound { get; protected set; } = 0;
         protected virtual void OnEnable()
         {
-            if (!EventBus<OnSoundChanged>.AddBinding(transform.GetInstanceID()))
-            {
-                Debug.LogError($"Unable to add OnSoundChanged binding for entity {transform}.");
-            }
-            else
-            {
-                if (!EventBus<OnSoundChanged>.AddActions(transform.GetInstanceID(), UpdateSound))
-                {
-                    Debug.LogError($"Unable to add action for OnSoundChanged binding for entity {transform}.");
-                }
-            }
+            RegisterEventBindings();
         }
         public void UpdateSound(OnSoundChanged @event)
         {
             CurrentSound += @event.Value;
         }
-        protected virtual void OnDisable()
+        public virtual void RegisterEventBindings()
         {
-            if (!EventBus<OnSoundChanged>.RemoveBinding(transform.GetInstanceID()))
-            {
-                Debug.LogError($"Unable to remove OnSoundChanged binding for entity {transform}.");
-            }
+            EventBus<OnSoundChanged>.AddBinding(transform.GetInstanceID());
         }
     }
 }

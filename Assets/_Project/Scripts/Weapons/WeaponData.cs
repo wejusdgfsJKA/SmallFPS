@@ -1,13 +1,17 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/WeaponData")]
-[System.Serializable]
-public class WeaponData : ScriptableObject
+namespace Weapon
 {
-    public Weapon.Type Type;
-    public int MaxAmmo;
-    public float AmmoRecharge;
-    public float Cooldown;
-    public float FireCost;
-    public float AltFireCost;
+    [CreateAssetMenu(menuName = "ScriptableObjects/WeaponData")]
+    [System.Serializable]
+    public class WeaponData : ScriptableObject
+    {
+        public int MaxAmmo;
+        public float AmmoRecharge;
+        public float Cooldown;
+        public float FireCost;
+        public float AltFireCost;
+        public BulletData Bullet;
+        public BulletData AltBullet;
+    }
 }

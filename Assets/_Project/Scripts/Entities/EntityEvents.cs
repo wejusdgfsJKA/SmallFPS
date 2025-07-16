@@ -2,17 +2,25 @@ using EventBus;
 
 namespace Entity
 {
+    public struct TakeDamage : IEvent
+    {
+        public DmgInfo DmgInfo;
+        public TakeDamage(DmgInfo DmgInfo)
+        {
+            this.DmgInfo = DmgInfo;
+        }
+    }
     /// <summary>
     /// This is meant to fire whenever the entity takes damage.
     /// </summary>
     public struct OnDamageTaken : IEvent
     {
-        public DmgInfo dmgInfo;
-        public EntityBase entityBase;
-        public OnDamageTaken(DmgInfo dmgInfo, EntityBase entityBase)
+        public DmgInfo DmgInfo;
+        public EntityBase EntityBase;
+        public OnDamageTaken(DmgInfo DmgInfo, EntityBase EntityBase)
         {
-            this.dmgInfo = dmgInfo;
-            this.entityBase = entityBase;
+            this.DmgInfo = DmgInfo;
+            this.EntityBase = EntityBase;
         }
     }
 
@@ -21,12 +29,12 @@ namespace Entity
     /// </summary>
     public struct OnDeath : IEvent
     {
-        public DmgInfo dmgInfo;
-        public EntityBase entityBase;
-        public OnDeath(DmgInfo dmgInfo, EntityBase entityBase)
+        public DmgInfo DmgInfo;
+        public EntityBase EntityBase;
+        public OnDeath(DmgInfo DmgInfo, EntityBase EntityBase)
         {
-            this.dmgInfo = dmgInfo;
-            this.entityBase = entityBase;
+            this.DmgInfo = DmgInfo;
+            this.EntityBase = EntityBase;
         }
     }
 }

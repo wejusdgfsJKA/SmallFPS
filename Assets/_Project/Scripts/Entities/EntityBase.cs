@@ -1,5 +1,8 @@
 using Detection;
 using EventBus;
+using Pooling;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 namespace Entity
 {
@@ -23,21 +26,21 @@ namespace Entity
         /// How much health the entity currently has.
         /// </summary>
         public int CurrentHealth { get; protected set; }
-        #endregion
-        /// <summary>
-        /// Get what type of entity is this.
-        /// </summary>
-        /// <returns>The type of the entity.</returns>
-        public EntityType GetID()
+        public EntityType ID
         {
-            return type;
+            get
+            {
+                return type;
+            }
         }
+
+        protected List<Type> eventBindings = new() { typeof(OnDamageTaken), typeof(OnDeath) };
+        #endregion
         protected override void OnEnable()
         {
             base.OnEnable();
             //register events
-            EventBus<OnDamageTaken>.AddBinding(transform.GetInstanceID());
-            EventBus<OnDeath>.AddBinding(transform.GetInstanceID());
+            RegisterEventBindings();
             //register entity
             if (EntityManager.Instance != null)
             {
@@ -63,7 +66,7 @@ namespace Entity
             throw new System.NotImplementedException();
         }
         /// <summary>
-        /// This entity just died. Fire OnDeath(this, dmgInfo).
+        /// This entity just died. Fire OnDeath(this, DmgInfo).
         /// </summary>
         /// <param name="dmgInfo">The damage package that caused the death.</param>
         protected void Die(DmgInfo dmgInfo)
@@ -71,15 +74,14 @@ namespace Entity
             EventBus<OnDeath>.Raise(transform.GetInstanceID(), new OnDeath(dmgInfo, this));
             transform.root.gameObject.SetActive(false);
         }
-        public virtual void ClearEventBindings()
+        public override void RegisterEventBindings()
         {
-            EventBus<OnDamageTaken>.RemoveBinding(transform.GetInstanceID());
-            EventBus<OnDeath>.RemoveBinding(transform.GetInstanceID());
+            EventBus<OnDamageTaken>.AddBinding(transform.GetInstanceID());
+            EventBus<OnDeath>.AddBinding(transform.GetInstanceID());
+            EventBus<TakeDamage>.AddBinding(transform.GetInstanceID());
         }
-        protected override void OnDisable()
+        protected void OnDisable()
         {
-            base.OnDisable();
-            ClearEventBindings();
             if (EntityManager.Instance != null)
             {
                 EntityManager.Instance.DeRegister(this);
