@@ -89,6 +89,9 @@ public class InteractionController : ValidatedMonoBehaviour
         }
         currentInteractableProperty = null;
     }
+    /// <summary>
+    /// Fires when the interact key is pressed.
+    /// </summary>
     public void OnInteract()
     {
         if (currentInteractable != null)
@@ -97,6 +100,9 @@ public class InteractionController : ValidatedMonoBehaviour
             InteractableManager.Instance.Interact(currentInteractable, transform);
         }
     }
+    /// <summary>
+    /// Fires when the escape key is pressed in game.
+    /// </summary>
     public void OnEscape()
     {
         if (settingsScreen.activeSelf)
@@ -111,10 +117,16 @@ public class InteractionController : ValidatedMonoBehaviour
         }
         settingsScreen.SetActive(!settingsScreen.activeSelf);
     }
+    /// <summary>
+    /// Fires when the MainMenu button is pressed in game.
+    /// </summary>
     public void OnMainMenuButton()
     {
         GameManager.Instance.GoToMainMenu();
     }
+    /// <summary>
+    /// Fires when the Restart button is pressed in game.
+    /// </summary>
     public void OnRestart()
     {
         GameManager.Instance.RestartLevel();

@@ -16,9 +16,15 @@ namespace Utilities
         protected Timer(float value)
         {
             initialTime = value;
+            if (initialTime <= 0)
+            {
+                throw new ArgumentException("Timer duration cannot be set below 0!");
+            }
             IsRunning = false;
         }
-
+        /// <summary>
+        /// Resets timer duration. Starts the timer if the timer is not running.
+        /// </summary>
         public void Start()
         {
             currentTime = initialTime;

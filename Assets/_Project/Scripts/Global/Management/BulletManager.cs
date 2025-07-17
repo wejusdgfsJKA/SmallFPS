@@ -8,7 +8,7 @@ namespace Weapon
     {
         RifleBullet,
         RifleBeam,
-        Explosion
+        RifleBeamExplosion
     }
     public class BulletManager : MonoBehaviour
     {

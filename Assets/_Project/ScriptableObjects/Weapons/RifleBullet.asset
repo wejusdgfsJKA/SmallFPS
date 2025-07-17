@@ -16,7 +16,11 @@ MonoBehaviour:
   Prefab: {fileID: 58382331521903002, guid: 4c5c678a9bec15343b71147220d5ccae, type: 3}
   Damage: 1
   AudioClip: {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2, type: 3}
+  SpawnOnHit: []
+  Duration: 0.1
   HitMask:
     serializedVersion: 2
     m_Bits: 65
   Range: 100
+  LineWidth: 0.1
+  Material: {fileID: 2100000, guid: de6d0903f2e29ee47965180fa637d339, type: 2}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: 
   MaxAmmo: 10
-  AmmoRecharge: 1
+  AmmoRecharge: 2
   Cooldown: 0.5
   FireCost: 1
   AltFireCost: 5

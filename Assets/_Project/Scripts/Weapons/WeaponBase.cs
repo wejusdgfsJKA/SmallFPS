@@ -30,7 +30,6 @@ namespace Weapon
         /// Where the shots are coming from.
         /// </summary>
         [SerializeField] protected Transform shootPoint;
-        public AudioSource AudioSource { get; set; }
         /// <summary>
         /// Maximum ammo of the weapon.
         /// </summary>
@@ -199,6 +198,11 @@ namespace Weapon
         {
             OnDisable();
         }
+        /// <summary>
+        /// Fire a bullet from the shootPoint. Target orientation is given by the weapon's 
+        /// transform.forward.
+        /// </summary>
+        /// <param name="bulletData">The data for the bullet to be fired.</param>
         protected void FireBullet(BulletData bulletData)
         {
             var b = BulletManager.Instance.GetBullet(bulletData);
@@ -212,7 +216,6 @@ namespace Weapon
             }
             b.transform.SetPositionAndRotation(shootPoint.position, shootPoint.rotation);
             b.Owner = transform;
-            audioSource.PlayOneShot(bulletData.AudioClip);
             b.gameObject.SetActive(true);
         }
     }

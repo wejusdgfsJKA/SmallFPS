@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: RifleBeam
   m_EditorClassIdentifier: 
   Type: 1
-  Prefab: {fileID: -2328469244296451467, guid: e60fb400f42835448bed896c2a2ba5c1, type: 3}
+  Prefab: {fileID: 6581147395184624588, guid: e60fb400f42835448bed896c2a2ba5c1, type: 3}
   Damage: 5
   AudioClip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+  SpawnOnHit:
+  - {fileID: 11400000, guid: f38f34d4a90837446a7bc6ac582ffd7f, type: 2}
+  Duration: 0.1
   HitMask:
     serializedVersion: 2
     m_Bits: 65
   Range: 100
-  Duration: 1
+  LineWidth: 0.1
+  Material: {fileID: 2100000, guid: de6d0903f2e29ee47965180fa637d339, type: 2}
