@@ -1,5 +1,4 @@
 using UnityEngine;
-using Utilities;
 
 namespace Weapon
 {
@@ -10,11 +9,12 @@ namespace Weapon
         protected RaycastHit hit;
         protected LayerMask targetMask = 1 << 0 | 1 << 6;
         [SerializeField] protected WeaponData weaponData;
+        protected float cooldown;
         public WeaponData Parameters
         {
             set
             {
-                coolDownTimer = new CountdownTimer(value.Cooldown);
+                cooldown = value.Cooldown;
                 maxAmmo = value.MaxAmmo;
                 ammoRecharge = value.AmmoRecharge;
                 fireCost = value.FireCost;
@@ -76,7 +76,6 @@ namespace Weapon
         /// Are we currently firing?
         /// </summary>
         [field: SerializeField] public bool Firing { get; protected set; }
-        protected Timer coolDownTimer;
         /// <summary>
         /// How much ammo does it cost per regular shot.
         /// </summary>
@@ -86,6 +85,7 @@ namespace Weapon
         /// </summary>
         protected float altFireCost;
         protected AudioSource audioSource;
+        protected float timeLastShot = -1;
         #endregion
         protected virtual void Awake()
         {
@@ -103,17 +103,18 @@ namespace Weapon
         {
             Ammo = maxAmmo;
         }
-        /// <summary>
-        /// Tick the weapon's cooldown and ammo recharge.
-        /// </summary>
-        /// <param name="deltaTime"></param>
-        public void Tick(float deltaTime)
+        protected void Update()
         {
-            coolDownTimer?.Tick(deltaTime);
-            if (!Firing)
+            if (Firing)
             {
-                //replenish amunition
-                ReplenishAmmo(ammoRecharge * deltaTime);
+                if (Time.time - timeLastShot >= cooldown)
+                {
+                    Fire();
+                }
+            }
+            else
+            {
+                ReplenishAmmo(ammoRecharge * Time.deltaTime);
             }
         }
         /// <summary>
@@ -124,13 +125,6 @@ namespace Weapon
             if (Ammo >= fireCost)
             {
                 Firing = true;
-                if (!coolDownTimer.IsRunning)
-                {
-                    Fire();
-                    coolDownTimer.Start();
-                }
-                coolDownTimer.OnTimerStop += Fire;
-                coolDownTimer.OnTimerStop += coolDownTimer.Start;
             }
         }
         /// <summary>
@@ -139,8 +133,6 @@ namespace Weapon
         public void StopFiring()
         {
             Firing = false;
-            coolDownTimer.OnTimerStop -= Fire;
-            coolDownTimer.OnTimerStop -= coolDownTimer.Start;
         }
         /// <summary>
         /// Fire normally once. Calls StopFiring if it runs out of ammo.
@@ -149,8 +141,9 @@ namespace Weapon
         {
             if (Ammo >= fireCost)
             {
+                timeLastShot = Time.time;
                 Ammo -= fireCost;
-                OnFire(); ;
+                OnFire();
             }
             else
             {
@@ -193,6 +186,7 @@ namespace Weapon
         protected void OnDisable()
         {
             OnAmmoValueChanged = delegate { };
+            StopFiring();
         }
         protected void OnDestroy()
         {

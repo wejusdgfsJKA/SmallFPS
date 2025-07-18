@@ -82,11 +82,4 @@ public class PlayerWeaponController : MonoBehaviour
         weapons[weapon].StopFiring();
         //let go of the fire button
     }
-    private void FixedUpdate()
-    {
-        for (int i = 0; i < weapons.Count; i++)
-        {
-            weapons[i].Tick(Time.fixedDeltaTime);
-        }
-    }
 }
