@@ -11,7 +11,7 @@ namespace Weapon
         /// <summary>
         /// The layers that will take damage from the explosion.
         /// </summary>
-        protected LayerMask hitMask = 1 << 0 | 1 << 6;
+        protected LayerMask hitMask = 1 << 0 | 1 << 6 | 1 << 7;
         /// <summary>
         /// The layers that will block the explosion.
         /// </summary>

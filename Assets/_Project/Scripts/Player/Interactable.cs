@@ -6,7 +6,7 @@ public class Interactable : MonoBehaviour
     /// <summary>
     /// This fires when this object is interacted with.
     /// </summary>
-    protected System.Action<Transform> OnInteract;
+    protected Action<Transform> OnInteract;
     protected void OnEnable()
     {
         InteractableManager.Instance.Register(this);

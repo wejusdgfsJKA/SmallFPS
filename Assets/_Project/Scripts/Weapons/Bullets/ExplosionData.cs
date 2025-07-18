@@ -12,7 +12,7 @@ namespace Weapon
         /// <summary>
         /// The layers that will take damage from the explosion.
         /// </summary>
-        public LayerMask HitMask = 1 << 0 | 1 << 6;
+        public LayerMask HitMask = 1 << 0 | 1 << 6 | 1 << 7;
         /// <summary>
         /// The layers that will block the explosion.
         /// </summary>

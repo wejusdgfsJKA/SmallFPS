@@ -13,7 +13,7 @@ namespace Weapon
         /// <summary>
         /// The layers that will be damaged by this bullet.
         /// </summary>
-        public LayerMask HitMask = 1 << 0 | 1 << 6;
+        public LayerMask HitMask = 1 << 0 | 1 << 6 | 1 << 7;
         /// <summary>
         /// Raycast distance.
         /// </summary>

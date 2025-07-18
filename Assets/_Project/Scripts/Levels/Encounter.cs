@@ -2,6 +2,7 @@ using Entity;
 using EventBus;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 public class Encounter : MonoBehaviour
 {
     [SerializeField] List<EntityType> entities = new List<EntityType>();
@@ -10,6 +11,7 @@ public class Encounter : MonoBehaviour
     ISpawnStrategy spawnStrategy;
     [SerializeField] SpawnStrategyType spawnStrategyType;
     [SerializeField] GameObject checkpoint;
+    [SerializeField] protected UnityEvent onEncounterEnd, onEncounterStart, onEncounterReset;
     public bool Completed { get; private set; }
     private void Awake()
     {
@@ -25,6 +27,7 @@ public class Encounter : MonoBehaviour
     }
     public void ResetEncounter()
     {
+        onEncounterReset?.Invoke();
         Completed = false;
     }
     /// <summary>
@@ -34,6 +37,7 @@ public class Encounter : MonoBehaviour
     {
         if (!Completed)
         {
+            onEncounterStart?.Invoke();
             entityCount = entities.Count;
             for (int i = 0; i < entityCount; i++)
             {
@@ -53,6 +57,7 @@ public class Encounter : MonoBehaviour
     }
     public void OnEncounterEnd()
     {
+        onEncounterEnd?.Invoke();
         Completed = true;
         if (checkpoint)
         {
