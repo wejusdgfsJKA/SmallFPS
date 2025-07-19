@@ -1,14 +1,16 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CheckPoint : MonoBehaviour
 {
-    public static GameObject ActiveCheckpoint { get; protected set; }
+    public static CheckPoint ActiveCheckpoint { get; protected set; }
+    public UnityEvent OnRespawn;
     private void OnEnable()
     {
-        if (ActiveCheckpoint != gameObject)
+        if (ActiveCheckpoint != this)
         {
-            ActiveCheckpoint?.SetActive(false);
-            ActiveCheckpoint = gameObject;
+            ActiveCheckpoint?.gameObject.SetActive(false);
+            ActiveCheckpoint = this;
         }
     }
 }

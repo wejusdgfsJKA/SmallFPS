@@ -61,7 +61,11 @@ namespace Entity
         public void TakeDamage(TakeDamage @event)
         {
             EventBus<OnDamageTaken>.Raise(transform.GetInstanceID(), new OnDamageTaken(@event.DmgInfo, this));
-            throw new System.NotImplementedException();
+            CurrentHealth -= @event.DmgInfo.Damage;
+            if (CurrentHealth <= 0)
+            {
+                Die(@event.DmgInfo);
+            }
         }
         /// <summary>
         /// This entity just died. Fire OnDeath(this, DmgInfo).
@@ -81,6 +85,7 @@ namespace Entity
         }
         protected void OnDisable()
         {
+            ClearEventBindings();
             if (EntityManager.Instance != null)
             {
                 EntityManager.Instance.DeRegister(this);
@@ -89,6 +94,13 @@ namespace Entity
             {
                 Debug.LogError("No EntityManager instance found!");
             }
+        }
+        protected void ClearEventBindings()
+        {
+            EventBus<OnDamageTaken>.ClearBinding(transform.GetInstanceID());
+            EventBus<OnDeath>.ClearBinding(transform.GetInstanceID());
+            EventBus<TakeDamage>.ClearBinding(transform.GetInstanceID());
+            EventBus<TakeDamage>.RemoveActions(transform.GetInstanceID(), TakeDamage);
         }
         protected void OnDestroy()
         {

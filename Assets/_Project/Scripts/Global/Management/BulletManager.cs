@@ -4,12 +4,6 @@ using UnityEngine;
 
 namespace Weapon
 {
-    public enum BulletType
-    {
-        RifleBullet,
-        RifleBeam,
-        RifleBeamExplosion
-    }
     public class BulletManager : MonoBehaviour
     {
         public static BulletManager Instance { get; private set; }

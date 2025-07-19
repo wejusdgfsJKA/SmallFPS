@@ -116,6 +116,13 @@ namespace Entity
             Entities.Remove(entity.transform.GetInstanceID());
             AddToPool(entity);
         }
+        public void TerminateAll()
+        {
+            foreach (EntityBase entity in Entities.Values)
+            {
+                entity.gameObject.SetActive(false);
+            }
+        }
         private void OnDisable()
         {
             Entities.Clear();

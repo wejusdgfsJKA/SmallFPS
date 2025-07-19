@@ -62,7 +62,9 @@ public class GameManager : MonoBehaviour
     public void RespawnPlayer()
     {
         Level.CurrentLevel?.ResetEncounters();
+        EntityManager.Instance.TerminateAll();
         EntityManager.Instance?.Spawn(EntityType.Player, CheckPoint.ActiveCheckpoint.transform);
+        CheckPoint.ActiveCheckpoint?.OnRespawn?.Invoke();
     }
     public void RestartLevel()
     {

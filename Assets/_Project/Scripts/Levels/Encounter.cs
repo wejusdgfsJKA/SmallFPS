@@ -5,6 +5,12 @@ using UnityEngine;
 using UnityEngine.Events;
 public class Encounter : MonoBehaviour
 {
+    public enum State
+    {
+        Waiting,
+        Running,
+        Completed
+    }
     [SerializeField] List<EntityType> entities = new List<EntityType>();
     [SerializeField] List<Transform> spawnPoints;
     int entityCount;
@@ -12,7 +18,7 @@ public class Encounter : MonoBehaviour
     [SerializeField] SpawnStrategyType spawnStrategyType;
     [SerializeField] GameObject checkpoint;
     [SerializeField] protected UnityEvent onEncounterEnd, onEncounterStart, onEncounterReset;
-    public bool Completed { get; private set; }
+    public State CurrentState { get; private set; } = State.Waiting;
     private void Awake()
     {
         spawnStrategy = spawnStrategyType switch
@@ -27,16 +33,21 @@ public class Encounter : MonoBehaviour
     }
     public void ResetEncounter()
     {
-        onEncounterReset?.Invoke();
-        Completed = false;
+        if (CurrentState != State.Waiting)
+        {
+            CurrentState = State.Waiting;
+            ClearEntityBindings();
+            onEncounterReset?.Invoke();
+        }
     }
     /// <summary>
     /// Begin spawning the entities in this encounter.
     /// </summary>
     public void StartEncounter()
     {
-        if (!Completed)
+        if (CurrentState == State.Waiting)
         {
+            CurrentState = State.Running;
             onEncounterStart?.Invoke();
             entityCount = entities.Count;
             for (int i = 0; i < entityCount; i++)
@@ -57,12 +68,20 @@ public class Encounter : MonoBehaviour
     }
     public void OnEncounterEnd()
     {
-        onEncounterEnd?.Invoke();
-        Completed = true;
-        if (checkpoint)
+        if (CurrentState == State.Running)
         {
-            Level.CurrentLevel.CheckpointReached();
-            checkpoint.SetActive(true);
+            ClearEntityBindings();
+            CurrentState = State.Completed;
+            onEncounterEnd?.Invoke();
+            if (checkpoint)
+            {
+                Level.CurrentLevel.CheckpointReached();
+                checkpoint.SetActive(true);
+            }
         }
+    }
+    void ClearEntityBindings()
+    {
+
     }
 }

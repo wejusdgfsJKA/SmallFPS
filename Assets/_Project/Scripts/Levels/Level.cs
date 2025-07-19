@@ -17,7 +17,7 @@ public class Level : MonoBehaviour
     public void CheckpointReached()
     {
         //clear completed encounters
-        encounters.RemoveWhere(e => e.Completed);
+        encounters.RemoveWhere(e => e.CurrentState == Encounter.State.Completed);
     }
     public void ResetEncounters()
     {

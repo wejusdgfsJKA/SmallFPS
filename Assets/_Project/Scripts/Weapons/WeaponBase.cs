@@ -209,7 +209,7 @@ namespace Weapon
                 shootPoint.LookAt(transform.forward * 100);
             }
             b.transform.SetPositionAndRotation(shootPoint.position, shootPoint.rotation);
-            b.Owner = transform;
+            b.Owner = transform.root;
             b.gameObject.SetActive(true);
         }
     }

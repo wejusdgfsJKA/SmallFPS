@@ -4,7 +4,6 @@ using KBCore.Refs;
 using Pooling;
 using System.Collections.Generic;
 using UnityEngine;
-using Utilities;
 namespace Weapon
 {
     [RequireComponent(typeof(AudioSource))]
@@ -35,7 +34,8 @@ namespace Weapon
         /// </summary>
         protected List<BulletData> spawnOnHit = new();
         [SerializeField, Self] protected AudioSource audioSource;
-        protected CountdownTimer timer;
+        protected float duration = 1;
+        protected float timeActivated = -1;
         #endregion
         /// <summary>
         /// Initialize this bullet. Should only be called in BulletManager. Derived classed 
@@ -51,22 +51,31 @@ namespace Weapon
             audioSource.playOnAwake = false;
             if (data.Duration > 0)
             {
-                timer = new CountdownTimer(data.Duration);
-                timer.OnTimerStop += () => gameObject.SetActive(false);
+                duration = data.Duration;
             }
         }
         protected virtual void OnEnable()
         {
             audioSource.Play();
-            timer?.Start();
+            timeActivated = Time.time;
         }
         protected void OnDisable()
         {
-            BulletManager.Instance.Release(this);
+            if (BulletManager.Instance != null)
+            {
+                BulletManager.Instance.Release(this);
+            }
+            else
+            {
+                Debug.LogError("No BulletManager instance found!");
+            }
         }
         protected void Update()
         {
-            timer?.Tick(Time.deltaTime);
+            if (Time.time - timeActivated >= duration)
+            {
+                gameObject.SetActive(false);
+            }
         }
         /// <summary>
         /// When hitting something, fire this at the point of contact.

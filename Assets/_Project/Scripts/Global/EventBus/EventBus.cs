@@ -34,6 +34,16 @@ namespace EventBus
         {
             return bindings.TryAdd(id, new());
         }
+        public static bool ClearBinding(int id)
+        {
+            EventBinding<T> e;
+            if (bindings.TryGetValue(id, out e))
+            {
+                e.Clear();
+                return true;
+            }
+            return false;
+        }
         public static bool RemoveBinding(int id)
         {
             EventBinding<T> binding;
