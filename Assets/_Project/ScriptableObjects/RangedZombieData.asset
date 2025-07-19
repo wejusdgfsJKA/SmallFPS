@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: edf367384302f154ea26e48df9582353, type: 3}
-  m_Name: PlayerData
+  m_Name: RangedZombieData
   m_EditorClassIdentifier: 
-  <Prefab>k__BackingField: {fileID: 6689677512355654993, guid: 289562783362d9a409228f51f9984ad4, type: 3}
-  <Type>k__BackingField: 0
-  <MaxHealth>k__BackingField: 5
+  <Prefab>k__BackingField: {fileID: 7270064195191921796, guid: ff860bfa67d801d4d8ffd36fe4701dac, type: 3}
+  <Type>k__BackingField: 2
+  <MaxHealth>k__BackingField: 2

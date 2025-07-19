@@ -1016,6 +1016,14 @@ PrefabInstance:
       propertyPath: rosterEntries.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: b122d84abdd1fc74581c25dc7c42288b, type: 2}
+    - target: {fileID: 1566669727045893873, guid: fe98f624130064e4a86e531d62e23296, type: 3}
+      propertyPath: rosterEntries.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 22794d591f3f5c743b5ae3ae3a01569a, type: 2}
+    - target: {fileID: 1566669727045893873, guid: fe98f624130064e4a86e531d62e23296, type: 3}
+      propertyPath: rosterEntries.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: eb35dcb65e5b8cc469e07ba8474d7740, type: 2}
     - target: {fileID: 4499081126897297166, guid: fe98f624130064e4a86e531d62e23296, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

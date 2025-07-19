@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: edf367384302f154ea26e48df9582353, type: 3}
-  m_Name: PlayerData
+  m_Name: ZombieData
   m_EditorClassIdentifier: 
-  <Prefab>k__BackingField: {fileID: 6689677512355654993, guid: 289562783362d9a409228f51f9984ad4, type: 3}
-  <Type>k__BackingField: 0
+  <Prefab>k__BackingField: {fileID: 471093536094281947, guid: 78c1f818049a74849b68bb32556a3ee5, type: 3}
+  <Type>k__BackingField: 1
   <MaxHealth>k__BackingField: 5

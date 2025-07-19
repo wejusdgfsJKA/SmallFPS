@@ -22,6 +22,7 @@ namespace Weapon
                 bullet = value.Bullet;
                 altBullet = value.AltBullet;
                 targetMask = value.TargetMask;
+                timeLastShot = -cooldown - 1;
                 ResetWeapon();
             }
         }
@@ -85,7 +86,7 @@ namespace Weapon
         /// </summary>
         protected float altFireCost;
         protected AudioSource audioSource;
-        protected float timeLastShot = -1;
+        protected float timeLastShot;
         #endregion
         protected virtual void Awake()
         {

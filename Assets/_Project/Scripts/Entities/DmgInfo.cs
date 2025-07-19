@@ -11,4 +11,9 @@ public struct DmgInfo : IEvent
     /// </summary>
     public int Damage { get; set; }
     public Transform Source { get; set; }
+    public DmgInfo(int damage, Transform source)
+    {
+        Damage = damage;
+        Source = source;
+    }
 }
