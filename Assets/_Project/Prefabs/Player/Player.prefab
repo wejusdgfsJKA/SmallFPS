@@ -921,7 +921,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputReader: {fileID: 11400000, guid: 3486497e49352f04baef707c84b57768, type: 2}
-  weapons: []
+  weapons:
+  - {fileID: 4926217664741224335}
   ammoDisplays:
   - {fileID: 8342715746651125138}
   - {fileID: 4799145868480758704}
@@ -1644,3 +1645,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8980898178252219372, guid: 3cc67ae25c2d6d1418cd5918c289046b, type: 3}
   m_PrefabInstance: {fileID: 6138790566532125863}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4926217664741224335 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1255428576204634920, guid: 3cc67ae25c2d6d1418cd5918c289046b, type: 3}
+  m_PrefabInstance: {fileID: 6138790566532125863}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ea3b439b1d05044a109e3c4871c7bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

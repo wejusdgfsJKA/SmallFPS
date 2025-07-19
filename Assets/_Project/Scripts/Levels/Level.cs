@@ -28,6 +28,7 @@ public class Level : MonoBehaviour
     }
     public void LevelFinished()
     {
+        CurrentLevel = null;
         GameManager.Instance.NextLevel();
     }
 }

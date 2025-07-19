@@ -10,4 +10,9 @@ public class TriggerDetector : MonoBehaviour
         onEnter?.Invoke(other.transform.root);
         onEnterNoArgs?.Invoke();
     }
+    private void OnDisable()
+    {
+        onEnter = null;
+        onEnterNoArgs = null;
+    }
 }

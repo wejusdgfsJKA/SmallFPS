@@ -16,10 +16,6 @@ public class Interactable : MonoBehaviour
         OnInteract = null;
         InteractableManager.Instance.DeRegister(transform);
     }
-    protected void OnDestroy()
-    {
-        OnDisable();
-    }
     /// <summary>
     /// Interact with this object.
     /// </summary>

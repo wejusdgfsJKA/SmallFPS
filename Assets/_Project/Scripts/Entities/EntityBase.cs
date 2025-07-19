@@ -102,9 +102,5 @@ namespace Entity
             EventBus<TakeDamage>.ClearBinding(transform.GetInstanceID());
             EventBus<TakeDamage>.RemoveActions(transform.GetInstanceID(), TakeDamage);
         }
-        protected void OnDestroy()
-        {
-            OnDisable();
-        }
     }
 }

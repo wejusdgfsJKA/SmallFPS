@@ -189,10 +189,6 @@ namespace Weapon
             OnAmmoValueChanged = delegate { };
             StopFiring();
         }
-        protected void OnDestroy()
-        {
-            OnDisable();
-        }
         /// <summary>
         /// Fire a bullet from the shootPoint. Target orientation is given by the weapon's 
         /// transform.forward.

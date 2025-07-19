@@ -1,5 +1,6 @@
 using Entity;
 using EventBus;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,12 +14,13 @@ public class Encounter : MonoBehaviour
     }
     [SerializeField] List<EntityType> entities = new List<EntityType>();
     [SerializeField] List<Transform> spawnPoints;
-    int entityCount;
+    [SerializeField] int entityCount;
     ISpawnStrategy spawnStrategy;
     [SerializeField] SpawnStrategyType spawnStrategyType;
     [SerializeField] GameObject checkpoint;
     [SerializeField] protected UnityEvent onEncounterEnd, onEncounterStart, onEncounterReset;
     public State CurrentState { get; private set; } = State.Waiting;
+    [SerializeField] float initialDelay = 1, inBetweenDelay = 0;
     private void Awake()
     {
         spawnStrategy = spawnStrategyType switch
@@ -36,7 +38,6 @@ public class Encounter : MonoBehaviour
         if (CurrentState != State.Waiting)
         {
             CurrentState = State.Waiting;
-            ClearEntityBindings();
             onEncounterReset?.Invoke();
         }
     }
@@ -50,12 +51,18 @@ public class Encounter : MonoBehaviour
             CurrentState = State.Running;
             onEncounterStart?.Invoke();
             entityCount = entities.Count;
-            for (int i = 0; i < entityCount; i++)
-            {
-                //spawn this entity
-                var e = EntityManager.Instance.Spawn(entities[i], spawnStrategy.GetSpawnPoint());
-                EventBus<OnDeath>.AddActions(e.transform.GetInstanceID(), null, OnEntityDeath);
-            }
+            StartCoroutine(SpawnEntities());
+        }
+    }
+    IEnumerator SpawnEntities()
+    {
+        yield return new WaitForSeconds(initialDelay);
+        for (int i = 0; i < entityCount; i++)
+        {
+            //spawn this entity
+            var e = EntityManager.Instance.Spawn(entities[i], spawnStrategy.GetSpawnPoint());
+            EventBus<OnDeath>.AddActions(e.transform.GetInstanceID(), null, OnEntityDeath);
+            yield return new WaitForSeconds(inBetweenDelay);
         }
     }
     public void OnEntityDeath()
@@ -70,7 +77,6 @@ public class Encounter : MonoBehaviour
     {
         if (CurrentState == State.Running)
         {
-            ClearEntityBindings();
             CurrentState = State.Completed;
             onEncounterEnd?.Invoke();
             if (checkpoint)
@@ -79,9 +85,5 @@ public class Encounter : MonoBehaviour
                 checkpoint.SetActive(true);
             }
         }
-    }
-    void ClearEntityBindings()
-    {
-
     }
 }

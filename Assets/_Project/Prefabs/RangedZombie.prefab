@@ -195,6 +195,8 @@ GameObject:
   - component: {fileID: 632486300396564145}
   - component: {fileID: 7417198730902928100}
   - component: {fileID: 3409914725146477981}
+  - component: {fileID: 5732527783287237366}
+  - component: {fileID: 2410852590599302587}
   m_Layer: 6
   m_Name: BehaviourTree
   m_TagString: Untagged
@@ -229,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 3409914725146477981}
+  selectedEditorNode: {fileID: 4873951474802265690}
   repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -264,6 +266,18 @@ MonoBehaviour:
   blackboard: {fileID: 5116293400021886684}
   agent: {fileID: 63723172989511398}
   attackCooldown: 1
+  player:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 5116293400021886684}
+    key: Player
+    constantValue: {fileID: 0}
+  los:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 5116293400021886684}
+    key: LOS
+    constantValue: 0
 --- !u!114 &262894588061820818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +356,7 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   loops: 1
-  infinite: 0
+  infinite: 1
   breakOnFailure: 0
 --- !u!114 &6361962014211080680
 MonoBehaviour:
@@ -459,8 +473,8 @@ MonoBehaviour:
   transformReference:
     useConstant: 0
     mode: 0
-    blackboard: {fileID: 0}
-    key: 
+    blackboard: {fileID: 5116293400021886684}
+    key: Player
     constantValue: {fileID: 0}
   gameObjectReference:
     useConstant: 0
@@ -574,7 +588,8 @@ MonoBehaviour:
     width: 160
     height: 44
   parent: {fileID: 6859790787201633967}
-  children: []
+  children:
+  - {fileID: 5732527783287237366}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -632,6 +647,50 @@ MonoBehaviour:
   agent: {fileID: 63723172989511398}
   stopDistance: 2
   updateInterval: 1
+--- !u!114 &5732527783287237366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5732016697778967768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a256ba1da6a1344add86c49292ffb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: ShootTask
+  rect:
+    serializedVersion: 2
+    x: 180
+    y: 520
+    width: 160
+    height: 44
+  parent: {fileID: 7417198730902928100}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  weapon: {fileID: 5417897163133663837}
+  player:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 5116293400021886684}
+    key: Player
+    constantValue: {fileID: 0}
+--- !u!114 &2410852590599302587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5732016697778967768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e5f392bbea2fa2499665ed8b604ff86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monoBehaviourTree: {fileID: 4710722394315360808}
 --- !u!1 &6718785181225099167
 GameObject:
   m_ObjectHideFlags: 0

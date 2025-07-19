@@ -18,20 +18,13 @@ public class PlayerMovementController : ValidatedMonoBehaviour
     {
         rb.useGravity = false;
         rb.freezeRotation = true;
-        inputReader.EnablePlayerActions();
         inputReader.Jump += OnJump;
         inputReader.Move += OnMove;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.Instance?.RespawnPlayer();
     }
     private void OnDestroy()
     {
         inputReader.Move -= OnMove;
         inputReader.Jump -= OnJump;
-        inputReader.DisablePlayerActions();
     }
     private void Update()
     {

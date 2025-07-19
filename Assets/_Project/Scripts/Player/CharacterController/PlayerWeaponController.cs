@@ -55,6 +55,10 @@ public class PlayerWeaponController : MonoBehaviour
     }
     protected void OnWeapon(InputAction.CallbackContext context, int weapon)
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
         if (weapon < 0 || weapon >= weapons.Count)
         {
             Debug.LogError($"Attempting to use nonexistant weapon {weapon}.");

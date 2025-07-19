@@ -195,6 +195,9 @@ GameObject:
   - component: {fileID: 2035400694748693183}
   - component: {fileID: 7037424041169451004}
   - component: {fileID: 5690657350424257647}
+  - component: {fileID: 5987222993554575599}
+  - component: {fileID: 7013185417535085432}
+  - component: {fileID: 1396285205638603974}
   m_Layer: 6
   m_Name: BehaviourTree
   m_TagString: Untagged
@@ -229,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 5690657350424257647}
   repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -248,6 +251,7 @@ MonoBehaviour:
   variables:
   - {fileID: 3787761482860571380}
   - {fileID: 7037424041169451004}
+  - {fileID: 5987222993554575599}
   masterBlackboard: {fileID: 0}
 --- !u!114 &1070797454620436101
 MonoBehaviour:
@@ -264,6 +268,18 @@ MonoBehaviour:
   blackboard: {fileID: 8622468267023424187}
   agent: {fileID: 2658082671388572876}
   attackCooldown: 1
+  player:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 8622468267023424187}
+    key: Player
+    constantValue: {fileID: 0}
+  los:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 8622468267023424187}
+    key: LOS
+    constantValue: 0
 --- !u!114 &3122504829552758218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +358,7 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   loops: 1
-  infinite: 0
+  infinite: 1
   breakOnFailure: 0
 --- !u!114 &3787761482860571380
 MonoBehaviour:
@@ -594,7 +610,7 @@ MonoBehaviour:
     height: 44
   parent: {fileID: 9023637720493255659}
   children:
-  - {fileID: 5690657350424257647}
+  - {fileID: 1396285205638603974}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -604,7 +620,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 2
+    constantValue: 1
   transform1:
     useConstant: 0
     mode: 0
@@ -646,11 +662,11 @@ MonoBehaviour:
   title: Invoke Unity Event
   rect:
     serializedVersion: 2
-    x: 180
-    y: 540
+    x: 186.4
+    y: 622.39996
     width: 160
     height: 44
-  parent: {fileID: 2035400694748693183}
+  parent: {fileID: 1396285205638603974}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -740,3 +756,55 @@ MonoBehaviour:
   vector2Event:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5987222993554575599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7533280558946272307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae15c5e6bcb1714080f2e8296c3d17a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: LOS
+  val: 0
+--- !u!114 &7013185417535085432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7533280558946272307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e5f392bbea2fa2499665ed8b604ff86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monoBehaviourTree: {fileID: 3124177085635292933}
+--- !u!114 &1396285205638603974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7533280558946272307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3922b31ecb96d2742abf4dc3f98c70af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Repeat Until Fail
+  rect:
+    serializedVersion: 2
+    x: 180
+    y: 540
+    width: 160
+    height: 44
+  parent: {fileID: 2035400694748693183}
+  children:
+  - {fileID: 5690657350424257647}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0

@@ -25,7 +25,7 @@ namespace EventBus
             EventBinding<T> binding;
             if (bindings.TryGetValue(bindingId, out binding))
             {
-                binding.Invoke(@event);
+                binding?.Invoke(@event);
                 return true;
             }
             return false;

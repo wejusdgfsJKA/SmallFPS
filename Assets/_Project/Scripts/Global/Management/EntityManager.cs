@@ -20,7 +20,7 @@ namespace Entity
         /// <summary>
         /// All entities the manager can spawn.
         /// </summary>
-        protected Dictionary<EntityType, EntityData> roster { get; } = new();
+        protected Dictionary<EntityType, EntityData> roster = new();
         /// <summary>
         /// Transform of currently active player.
         /// </summary>
@@ -112,6 +112,7 @@ namespace Entity
             if (entity.Type == EntityType.Player)
             {
                 Player = null;
+                GameManager.Instance.RespawnPlayer();
             }
             Entities.Remove(entity.transform.GetInstanceID());
             AddToPool(entity);
@@ -120,7 +121,10 @@ namespace Entity
         {
             foreach (EntityBase entity in Entities.Values)
             {
-                entity.gameObject.SetActive(false);
+                if (entity.Type != EntityType.Player)
+                {
+                    entity.gameObject.SetActive(false);
+                }
             }
         }
         private void OnDisable()

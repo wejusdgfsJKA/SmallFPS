@@ -10,6 +10,8 @@ public class BTAgent : ValidatedMonoBehaviour
     [SerializeField, Self] Blackboard blackboard;
     [SerializeField, Anywhere] NavMeshAgent agent;
     [SerializeField] float attackCooldown = 1;
+    [SerializeField] TransformReference player;
+    [SerializeField] BoolReference los;
     float lastAttacked;
     private void Awake()
     {
@@ -17,7 +19,11 @@ public class BTAgent : ValidatedMonoBehaviour
     }
     private void Update()
     {
-        blackboard.GetVariable<TransformVariable>("Player").Value = EntityManager.Instance.Player;
+        player.Value = EntityManager.Instance.Player;
+        if (player.Value != null)
+        {
+            los.Value = Physics.Linecast(transform.position, player.Value.position, 1 << 0);
+        }
     }
     public void Melee(Transform target)
     {
