@@ -1,3 +1,5 @@
+using EventBus;
+using Levels;
 using Pooling;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,6 +38,7 @@ namespace Entity
             {
                 roster.Add(rosterEntries[i].Type, rosterEntries[i]);
             }
+            EventBus<PlayerDeath>.AddActions(0, null, EntityManager.Instance.TerminateAll);
         }
         /// <summary>
         /// Register an existing entity. This should only be called in OnEnable in EntityBase.
@@ -112,19 +115,18 @@ namespace Entity
             if (entity.Type == EntityType.Player)
             {
                 Player = null;
-                GameManager.Instance.RespawnPlayer();
+                EventBus<Levels.PlayerDeath>.Raise(0, new());
             }
             Entities.Remove(entity.transform.GetInstanceID());
             AddToPool(entity);
         }
         public void TerminateAll()
         {
-            foreach (EntityBase entity in Entities.Values)
+            EntityBase[] entities = new EntityBase[Entities.Count];
+            Entities.Values.CopyTo(entities, 0);
+            for (int i = 0; i < entities.Length; i++)
             {
-                if (entity.Type != EntityType.Player)
-                {
-                    entity.gameObject.SetActive(false);
-                }
+                entities[i].gameObject.SetActive(false);
             }
         }
         private void OnDisable()

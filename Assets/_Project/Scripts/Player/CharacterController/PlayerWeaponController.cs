@@ -1,4 +1,7 @@
+using Entity;
+using EventBus;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
@@ -8,7 +11,13 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] protected InputReader inputReader;
     [SerializeField] protected List<WeaponBase> weapons = new();
     [SerializeField] protected List<Transform> ammoDisplays = new();
+    [SerializeField] protected TextMeshProUGUI healthText;
     protected List<System.Action<float>> ammoValueChangedHandlers = new();
+    private void Awake()
+    {
+        EventBus<OnHealthUpdated>.AddActions(transform.root.GetInstanceID(), UpdateHealth);
+        Debug.Log("Subbed");
+    }
     private void OnEnable()
     {
         ConnectEvents();
@@ -29,6 +38,11 @@ public class PlayerWeaponController : MonoBehaviour
             weapons[i].OnAmmoValueChanged += handler;
             ammoValueChangedHandlers.Add(handler);
         }
+    }
+    void UpdateHealth(OnHealthUpdated @event)
+    {
+        Debug.Log(@event);
+        healthText.text = @event.EntityBase.CurrentHealth.ToString() + " HP";
     }
     void DisconnectEvents()
     {

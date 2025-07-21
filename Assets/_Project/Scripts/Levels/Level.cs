@@ -1,34 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Level : MonoBehaviour
+namespace Levels
 {
-    public static Level CurrentLevel { get; private set; }
-    protected HashSet<Encounter> encounters = new();
-    private void OnEnable()
+    public class Level : MonoBehaviour
     {
-        CurrentLevel = this;
-        GameManager.Instance.RespawnPlayer();
-    }
-    public void RegisterEncounter(Encounter encounter)
-    {
-        encounters.Add(encounter);
-    }
-    public void CheckpointReached()
-    {
-        //clear completed encounters
-        encounters.RemoveWhere(e => e.CurrentState == Encounter.State.Completed);
-    }
-    public void ResetEncounters()
-    {
-        foreach (var item in encounters)
+        public static Level CurrentLevel { get; private set; }
+        protected HashSet<Encounter> encounters = new();
+        private void Awake()
         {
-            item.ResetEncounter();
+            CurrentLevel = this;
         }
-    }
-    public void LevelFinished()
-    {
-        CurrentLevel = null;
-        GameManager.Instance.NextLevel();
+        private void Start()
+        {
+            GameManager.Instance.SpawnPlayer();
+        }
+        public void LevelFinished()
+        {
+            CurrentLevel = null;
+            GameManager.Instance.NextLevel();
+        }
     }
 }

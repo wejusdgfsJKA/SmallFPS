@@ -14,6 +14,10 @@ namespace EventBus
             }
             bindings.Clear();
         }
+        public static bool Raise(T @event)
+        {
+            return Raise(0, @event);
+        }
         /// <summary>
         /// Raise a binding.
         /// </summary>

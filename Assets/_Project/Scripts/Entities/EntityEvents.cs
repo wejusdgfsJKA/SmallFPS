@@ -23,7 +23,14 @@ namespace Entity
             this.EntityBase = EntityBase;
         }
     }
-
+    public struct OnHealthUpdated : IEvent
+    {
+        public EntityBase EntityBase;
+        public OnHealthUpdated(EntityBase entityBase)
+        {
+            EntityBase = entityBase;
+        }
+    }
     /// <summary>
     /// This is meant to fire whenever the entity dies.
     /// </summary>

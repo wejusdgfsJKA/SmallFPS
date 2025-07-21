@@ -22,7 +22,7 @@ public class BTAgent : ValidatedMonoBehaviour
         player.Value = EntityManager.Instance.Player;
         if (player.Value != null)
         {
-            los.Value = Physics.Linecast(transform.position, player.Value.position, 1 << 0);
+            los.Value = !Physics.Linecast(transform.position, player.Value.position, 1 << 0);
         }
     }
     public void Melee(Transform target)

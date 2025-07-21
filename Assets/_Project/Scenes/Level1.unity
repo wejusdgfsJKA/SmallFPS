@@ -175,6 +175,7 @@ MonoBehaviour:
   - {fileID: 1730812670}
   - {fileID: 307137943}
   - {fileID: 1478104531}
+  entityCount: 0
   spawnStrategyType: 0
   checkpoint: {fileID: 201698004}
   onEncounterEnd:
@@ -315,13 +316,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 201698004}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 7.4, y: 0.5, z: -81.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1753971383}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &241981711
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,7 +770,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -7842,13 +7843,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 836093237}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 6.89, y: 0.5, z: 26.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1880956956}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &836093239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7865,7 +7866,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1550480551}
-        m_TargetAssemblyTypeName: Encounter, Assembly-CSharp
+        m_TargetAssemblyTypeName: Levels.Encounter, Assembly-CSharp
         m_MethodName: StartEncounter
         m_Mode: 1
         m_Arguments:
@@ -7991,6 +7992,7 @@ MonoBehaviour:
   - {fileID: 540598496}
   - {fileID: 1660888626}
   - {fileID: 651844159}
+  entityCount: 0
   spawnStrategyType: 0
   checkpoint: {fileID: 1009342473}
   onEncounterEnd:
@@ -8135,13 +8137,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1009342473}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 7.5, y: 0.5, z: -53.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1753971383}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1196769525
 GameObject:
   m_ObjectHideFlags: 0
@@ -8442,8 +8444,9 @@ MonoBehaviour:
   - {fileID: 411320412}
   - {fileID: 299502191}
   - {fileID: 1196769526}
+  entityCount: 0
   spawnStrategyType: 0
-  checkpoint: {fileID: 0}
+  checkpoint: {fileID: 1009342473}
   onEncounterEnd:
     m_PersistentCalls:
       m_Calls:
@@ -9252,7 +9255,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

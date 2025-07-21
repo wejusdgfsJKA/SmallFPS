@@ -8,7 +8,7 @@ namespace Entity
     public class EntityBase : MonoBehaviour, Identifiable<EntityType>
     {
         #region Fields
-        protected int maxHealth;
+        [field: SerializeField] public int MaxHealth { get; protected set; }
         public EntityType Type { get; protected set; }
         /// <summary>
         /// Set the entity's parameters.
@@ -18,13 +18,26 @@ namespace Entity
             set
             {
                 Type = value.Type;
-                maxHealth = value.MaxHealth;
+                MaxHealth = value.MaxHealth;
             }
         }
+        [SerializeField] protected int currentHealth;
         /// <summary>
         /// How much health the entity currently has.
         /// </summary>
-        public int CurrentHealth { get; protected set; }
+        public int CurrentHealth
+        {
+            get
+            {
+                return currentHealth;
+            }
+            set
+            {
+                currentHealth = value;
+                Debug.Log("Raised");
+                EventBus<OnHealthUpdated>.Raise(transform.GetInstanceID(), new OnHealthUpdated(this));
+            }
+        }
         public EntityType ID
         {
             get
@@ -35,10 +48,12 @@ namespace Entity
 
         protected List<Type> eventBindings = new() { typeof(OnDamageTaken), typeof(OnDeath) };
         #endregion
-        protected void OnEnable()
+        protected virtual void Awake()
         {
-            //register events
             RegisterEventBindings();
+        }
+        protected virtual void OnEnable()
+        {
             //register entity
             if (EntityManager.Instance != null)
             {
@@ -51,7 +66,7 @@ namespace Entity
             {
                 Debug.LogError("No EntityManager instance found!");
             }
-            CurrentHealth = maxHealth;
+            CurrentHealth = MaxHealth;
         }
         /// <summary>
         /// Receive an attack. Fires OnDamageTaken event binding.
@@ -78,6 +93,7 @@ namespace Entity
         }
         public void RegisterEventBindings()
         {
+            EventBus<OnHealthUpdated>.AddBinding(transform.GetInstanceID());
             EventBus<OnDamageTaken>.AddBinding(transform.GetInstanceID());
             EventBus<OnDeath>.AddBinding(transform.GetInstanceID());
             EventBus<TakeDamage>.AddBinding(transform.GetInstanceID());
@@ -85,7 +101,6 @@ namespace Entity
         }
         protected void OnDisable()
         {
-            ClearEventBindings();
             if (EntityManager.Instance != null)
             {
                 EntityManager.Instance.DeRegister(this);
@@ -94,13 +109,6 @@ namespace Entity
             {
                 Debug.LogError("No EntityManager instance found!");
             }
-        }
-        protected void ClearEventBindings()
-        {
-            EventBus<OnDamageTaken>.ClearBinding(transform.GetInstanceID());
-            EventBus<OnDeath>.ClearBinding(transform.GetInstanceID());
-            EventBus<TakeDamage>.ClearBinding(transform.GetInstanceID());
-            EventBus<TakeDamage>.RemoveActions(transform.GetInstanceID(), TakeDamage);
         }
     }
 }

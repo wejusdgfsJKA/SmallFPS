@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8818163244917710899
 Transform:
   m_ObjectHideFlags: 0
@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953d21ddb1877664fb20f753d206a0ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <MaxHealth>k__BackingField: 0
 --- !u!54 &431769609700467331
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -620,7 +621,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 1
+    constantValue: 2
   transform1:
     useConstant: 0
     mode: 0
@@ -662,8 +663,8 @@ MonoBehaviour:
   title: Invoke Unity Event
   rect:
     serializedVersion: 2
-    x: 186.4
-    y: 622.39996
+    x: 172.79999
+    y: 612
     width: 160
     height: 44
   parent: {fileID: 1396285205638603974}

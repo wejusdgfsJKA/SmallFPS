@@ -1,25 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
-public enum SpawnStrategyType
+namespace Levels
 {
-    Linear
-}
-public interface ISpawnStrategy
-{
-    Transform GetSpawnPoint();
-}
-public class LinearSpawnStrategy : ISpawnStrategy
-{
-    int index = -1;
-    protected List<Transform> points;
-    public LinearSpawnStrategy(List<Transform> points)
+    public enum SpawnStrategyType
     {
-        this.points = points;
+        Linear
     }
-    public Transform GetSpawnPoint()
+    public interface ISpawnStrategy
     {
-        index++;
-        return points[index];
+        Transform GetSpawnPoint();
+    }
+    public class LinearSpawnStrategy : ISpawnStrategy
+    {
+        int index = -1;
+        protected List<Transform> points;
+        public LinearSpawnStrategy(List<Transform> points)
+        {
+            this.points = points;
+        }
+        public Transform GetSpawnPoint()
+        {
+            index = (index + 1) % points.Count;
+            return points[index];
+        }
     }
 }
-

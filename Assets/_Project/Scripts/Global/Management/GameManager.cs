@@ -1,5 +1,5 @@
-using Entity;
 using EventBus;
+using Levels;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        EventBus<CheckpointReached>.AddBinding(0);
+        EventBus<PlayerDeath>.AddBinding(0);
     }
     protected void OnEnable()
     {
@@ -51,19 +53,14 @@ public class GameManager : MonoBehaviour
         //probably save here as well
         SceneManager.LoadScene(0);
     }
-    public void RespawnPlayer()
+    public void SpawnPlayer()
     {
-        StartCoroutine(RespawnCoroutine());
+        StartCoroutine(SpawnPlayerCoroutine());
     }
-    IEnumerator RespawnCoroutine()
+    IEnumerator SpawnPlayerCoroutine()
     {
-        yield return new WaitUntil(() => Level.CurrentLevel != null);
-        Level.CurrentLevel?.ResetEncounters();
-        EntityManager.Instance?.TerminateAll();
-        yield return new WaitUntil(() => CheckPoint.ActiveCheckpoint != null);
-        CheckPoint.ActiveCheckpoint?.OnRespawn?.Invoke();
-        yield return new WaitForSeconds(1);
-        EntityManager.Instance?.Spawn(EntityType.Player, CheckPoint.ActiveCheckpoint.transform).gameObject.SetActive(true);
+        yield return new WaitUntil(() => Checkpoint.ActiveCheckpoint != null);
+        Checkpoint.Respawn();
     }
     public void RestartLevel()
     {
