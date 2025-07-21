@@ -1,7 +1,5 @@
 using EventBus;
 using Pooling;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 namespace Entity
 {
@@ -17,8 +15,10 @@ namespace Entity
         {
             set
             {
+                RegisterEventBindings();
                 Type = value.Type;
                 MaxHealth = value.MaxHealth;
+                CurrentHealth = MaxHealth;
             }
         }
         [SerializeField] protected int currentHealth;
@@ -34,8 +34,10 @@ namespace Entity
             set
             {
                 currentHealth = value;
-                Debug.Log("Raised");
-                EventBus<OnHealthUpdated>.Raise(transform.GetInstanceID(), new OnHealthUpdated(this));
+                if (!EventBus<OnHealthUpdated>.Raise(transform.GetInstanceID(), new OnHealthUpdated(this)))
+                {
+                    Debug.LogError($"Unable to raise OnHealthUpdated event on {transform}.");
+                }
             }
         }
         public EntityType ID
@@ -45,13 +47,7 @@ namespace Entity
                 return Type;
             }
         }
-
-        protected List<Type> eventBindings = new() { typeof(OnDamageTaken), typeof(OnDeath) };
         #endregion
-        protected virtual void Awake()
-        {
-            RegisterEventBindings();
-        }
         protected virtual void OnEnable()
         {
             //register entity
@@ -91,7 +87,7 @@ namespace Entity
             EventBus<OnDeath>.Raise(transform.GetInstanceID(), new OnDeath(dmgInfo, this));
             transform.root.gameObject.SetActive(false);
         }
-        public void RegisterEventBindings()
+        protected void RegisterEventBindings()
         {
             EventBus<OnHealthUpdated>.AddBinding(transform.GetInstanceID());
             EventBus<OnDamageTaken>.AddBinding(transform.GetInstanceID());
@@ -99,8 +95,15 @@ namespace Entity
             EventBus<TakeDamage>.AddBinding(transform.GetInstanceID());
             EventBus<TakeDamage>.AddActions(transform.GetInstanceID(), TakeDamage);
         }
+        protected void ClearEventBindings()
+        {
+            EventBus<OnHealthUpdated>.ClearBinding(transform.GetInstanceID());
+            EventBus<OnDamageTaken>.ClearBinding(transform.GetInstanceID());
+            EventBus<OnDeath>.ClearBinding(transform.GetInstanceID());
+        }
         protected void OnDisable()
         {
+            ClearEventBindings();
             if (EntityManager.Instance != null)
             {
                 EntityManager.Instance.DeRegister(this);

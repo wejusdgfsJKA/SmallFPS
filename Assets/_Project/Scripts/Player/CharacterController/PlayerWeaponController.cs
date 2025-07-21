@@ -15,13 +15,24 @@ public class PlayerWeaponController : MonoBehaviour
     protected List<System.Action<float>> ammoValueChangedHandlers = new();
     private void Awake()
     {
-        EventBus<OnHealthUpdated>.AddActions(transform.root.GetInstanceID(), UpdateHealth);
-        Debug.Log("Subbed");
+        if (!EventBus<OnHealthUpdated>.AddActions(transform.GetInstanceID(), UpdateHealth))
+        {
+            Debug.LogError($"{this} unable to add action to OnHealthUpdated EventBus. Adding new binding.");
+            EventBus<OnHealthUpdated>.AddBinding(transform.GetInstanceID());
+            EventBus<OnHealthUpdated>.AddActions(transform.GetInstanceID(), UpdateHealth);
+        }
     }
     private void OnEnable()
     {
+        if (!EventBus<OnHealthUpdated>.AddActions(transform.GetInstanceID(), UpdateHealth))
+        {
+            Debug.LogError($"{this} unable to add action to OnHealthUpdated EventBus. Adding new binding.");
+            EventBus<OnHealthUpdated>.AddBinding(transform.GetInstanceID());
+            EventBus<OnHealthUpdated>.AddActions(transform.GetInstanceID(), UpdateHealth);
+        }
         ConnectEvents();
         ResetWeapons();
+
     }
     void ConnectEvents()
     {
@@ -41,7 +52,6 @@ public class PlayerWeaponController : MonoBehaviour
     }
     void UpdateHealth(OnHealthUpdated @event)
     {
-        Debug.Log(@event);
         healthText.text = @event.EntityBase.CurrentHealth.ToString() + " HP";
     }
     void DisconnectEvents()

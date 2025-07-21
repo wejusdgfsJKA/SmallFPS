@@ -66,16 +66,6 @@ namespace Entity
         /// </summary>
         /// <param name="id">The id of the enemy (it's Type, not its unique identifier).</param>
         /// <param name="position">Spawn position.</param>
-        /// <returns>An instance of the enemy if existing pool/roster entry was found, null otherwise</returns>
-        public EntityBase Spawn(EntityType id, Vector3 position)
-        {
-            return Spawn(id, position, Quaternion.identity);
-        }
-        /// <summary>
-        /// Spawn a new enemy, or get one from the entity pool. The spawned enemy will be inactive.
-        /// </summary>
-        /// <param name="id">The id of the enemy (it's Type, not its unique identifier).</param>
-        /// <param name="position">Spawn position.</param>
         /// <param name="rotation">Spawn rotation.</param>
         /// <returns>An instance of the enemy if existing pool/roster entry was found, null otherwise</returns>
         public EntityBase Spawn(EntityType id, Vector3 position, Quaternion rotation)
@@ -83,6 +73,10 @@ namespace Entity
             EntityBase e = multiPool.Get(id);
             if (e == null)
             {
+                if (id == EntityType.Player)
+                {
+                    int a = 1;
+                }
                 EntityData data;
                 if (roster.TryGetValue(id, out data))
                 {
@@ -95,6 +89,11 @@ namespace Entity
                     Debug.LogError($"Id {id} not found in entity roster!");
                     return null;
                 }
+            }
+            else
+            {
+                e.transform.position = position;
+                e.transform.rotation = rotation;
             }
             return e;
         }
@@ -134,14 +133,6 @@ namespace Entity
             Entities.Clear();
             multiPool.Clear();
             roster.Clear();
-        }
-        private void OnDestroy()
-        {
-            OnDisable();
-        }
-        private void OnApplicationQuit()
-        {
-            OnDestroy();
         }
     }
 }

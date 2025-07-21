@@ -17,6 +17,6 @@ MonoBehaviour:
   Damage: 1
   AudioClip: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
   SpawnOnHit: []
-  Duration: 10
-  Layer: 0
-  Velocity: 1
+  Duration: 20
+  Layer: 6
+  Velocity: 10

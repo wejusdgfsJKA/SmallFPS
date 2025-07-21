@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 0
+  currentHealth: 0
 --- !u!54 &431769609700467331
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -198,7 +199,6 @@ GameObject:
   - component: {fileID: 5690657350424257647}
   - component: {fileID: 5987222993554575599}
   - component: {fileID: 7013185417535085432}
-  - component: {fileID: 1396285205638603974}
   m_Layer: 6
   m_Name: BehaviourTree
   m_TagString: Untagged
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 5690657350424257647}
+  selectedEditorNode: {fileID: 1160941412681990664}
   repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -463,8 +463,8 @@ MonoBehaviour:
   title: Idle
   rect:
     serializedVersion: 2
-    x: 540
-    y: 280
+    x: 534.4
+    y: 292
     width: 160
     height: 44
   parent: {fileID: 3006400518895162859}
@@ -611,7 +611,7 @@ MonoBehaviour:
     height: 44
   parent: {fileID: 9023637720493255659}
   children:
-  - {fileID: 1396285205638603974}
+  - {fileID: 5690657350424257647}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -663,11 +663,11 @@ MonoBehaviour:
   title: Invoke Unity Event
   rect:
     serializedVersion: 2
-    x: 172.79999
-    y: 612
+    x: 180
+    y: 560
     width: 160
     height: 44
-  parent: {fileID: 1396285205638603974}
+  parent: {fileID: 2035400694748693183}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -784,28 +784,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monoBehaviourTree: {fileID: 3124177085635292933}
---- !u!114 &1396285205638603974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7533280558946272307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3922b31ecb96d2742abf4dc3f98c70af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Repeat Until Fail
-  rect:
-    serializedVersion: 2
-    x: 180
-    y: 540
-    width: 160
-    height: 44
-  parent: {fileID: 2035400694748693183}
-  children:
-  - {fileID: 5690657350424257647}
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0

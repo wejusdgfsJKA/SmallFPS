@@ -1,4 +1,5 @@
 using KBCore.Refs;
+using UnityEditor;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
@@ -7,11 +8,12 @@ public class PlayerMovementController : ValidatedMonoBehaviour
     #region Fields
     [SerializeField, Anywhere] InputReader inputReader;
     [SerializeField, Self] Rigidbody rb;
-    [SerializeField, Anywhere] Transform groundCheckPoint;
+    [field: SerializeField] public Transform GroundCheckPoint { get; protected set; }
     [field: SerializeField] public bool Grounded { get; protected set; }
     [SerializeField] bool onSlope;
     RaycastHit slopeHit;
     Vector2 inputVector;
+    [field: SerializeField] public float GroundCheckRadius { get; protected set; } = 0.4f;
     #endregion
 
     private void Awake()
@@ -33,7 +35,7 @@ public class PlayerMovementController : ValidatedMonoBehaviour
     }
     void GroundCheck()
     {
-        Grounded = Physics.CheckSphere(groundCheckPoint.position, transform.localScale.x / 2, GlobalPlayerConfig.GroundLayerMask);
+        Grounded = Physics.CheckSphere(GroundCheckPoint.position, GroundCheckRadius, GlobalPlayerConfig.GroundLayerMask);
         if (Grounded)
         {
             SlopeCheck();
@@ -45,7 +47,7 @@ public class PlayerMovementController : ValidatedMonoBehaviour
     }
     void SlopeCheck()
     {
-        Physics.Raycast(groundCheckPoint.position, -groundCheckPoint.up, out slopeHit, transform.localScale.x / 2, GlobalPlayerConfig.GroundLayerMask);
+        Physics.Raycast(GroundCheckPoint.position, -GroundCheckPoint.up, out slopeHit, transform.localScale.x / 2, GlobalPlayerConfig.GroundLayerMask);
         onSlope = slopeHit.normal != Vector3.up;
     }
     private void FixedUpdate()
@@ -77,4 +79,18 @@ public class PlayerMovementController : ValidatedMonoBehaviour
             rb.AddForce(transform.up * GlobalPlayerConfig.JumpForce, ForceMode.Impulse);
         }
     }
+#if UNITY_EDITOR
+    [CustomEditor(typeof(PlayerMovementController))]
+    public class GroundCheckDebug : Editor
+    {
+        private void OnSceneGUI()
+        {
+            var p = (PlayerMovementController)target;
+            Handles.color = Color.yellow;
+            Handles.DrawWireArc(p.GroundCheckPoint.position, Vector3.up, p.transform.forward, 360, p.GroundCheckRadius);
+            Handles.DrawWireArc(p.GroundCheckPoint.position, p.transform.forward, Vector3.up, 360, p.GroundCheckRadius);
+            Handles.DrawWireArc(p.GroundCheckPoint.position, p.transform.right, Vector3.up, 360, p.GroundCheckRadius);
+        }
+    }
+#endif
 }

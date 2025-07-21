@@ -37,7 +37,12 @@ public class InputReader : ScriptableObject, IPlayerActions, IInputReader
     public string InteractKey => InputActions.Player.Interact.GetBindingDisplayString();
     public void EnablePlayerActions()
     {
-        inputActions?.Enable();
+        if (inputActions == null)
+        {
+            inputActions = new PlayerControls();
+        }
+        inputActions.Player.SetCallbacks(this);
+        inputActions.Enable();
     }
     public void DisablePlayerActions()
     {

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MBT
 {
@@ -15,7 +13,10 @@ namespace MBT
             monoBehaviourTree = GetComponent<MonoBehaviourTree>();
             OnValidate();
         }
-
+        private void OnEnable()
+        {
+            monoBehaviourTree?.Restart();
+        }
         void Update()
         {
             monoBehaviourTree.Tick();

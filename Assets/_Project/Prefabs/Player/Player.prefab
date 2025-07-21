@@ -370,7 +370,7 @@ Transform:
   m_GameObject: {fileID: 1399365190490886335}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -940,7 +940,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4583501436427864276
 Transform:
   m_ObjectHideFlags: 0
@@ -1040,9 +1040,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputReader: {fileID: 11400000, guid: 3486497e49352f04baef707c84b57768, type: 2}
   rb: {fileID: 3832161061893258359}
-  groundCheckPoint: {fileID: 3741848804775637333}
+  <GroundCheckPoint>k__BackingField: {fileID: 3741848804775637333}
   <Grounded>k__BackingField: 0
   onSlope: 0
+  <GroundCheckRadius>k__BackingField: 0.4
 --- !u!114 &3184350918767964223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1075,6 +1076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 0
+  currentHealth: 0
 --- !u!114 &6019802631165373703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1714,7 +1716,7 @@ Transform:
   m_GameObject: {fileID: 8484614081420394181}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.074, z: 0}
+  m_LocalPosition: {x: 0, y: -0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

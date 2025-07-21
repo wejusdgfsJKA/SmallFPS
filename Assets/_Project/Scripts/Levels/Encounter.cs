@@ -8,6 +8,7 @@ namespace Levels
 {
     public class Encounter : MonoBehaviour
     {
+        #region Fields
         public enum State
         {
             Waiting,
@@ -22,8 +23,9 @@ namespace Levels
         [SerializeField] SpawnStrategyType spawnStrategyType;
         [SerializeField] GameObject checkpoint;
         [SerializeField] protected UnityEvent onEncounterEnd, onEncounterStart, onEncounterReset;
-        public State CurrentState { get; private set; } = State.Waiting;
+        [field: SerializeField] public State CurrentState { get; private set; } = State.Waiting;
         [SerializeField] float initialDelay = 1, inBetweenDelay = 0;
+        #endregion
         private void Awake()
         {
             spawnStrategy = spawnStrategyType switch
@@ -31,7 +33,6 @@ namespace Levels
                 SpawnStrategyType.Linear => new LinearSpawnStrategy(spawnPoints),
                 _ => spawnStrategy
             };
-            PreSpawn();
             RegisterActions();
         }
         protected void RegisterActions()
@@ -64,10 +65,6 @@ namespace Levels
                 onEncounterReset?.Invoke();
             }
         }
-        public void PreSpawn()
-        {
-            StartCoroutine(SpawnEntities(false));
-        }
         /// <summary>
         /// Begin spawning the entities in this encounter.
         /// </summary>
@@ -90,6 +87,7 @@ namespace Levels
                 var e = EntityManager.Instance.Spawn(entities[i], spawnStrategy.GetSpawnPoint());
                 if (enable)
                 {
+                    EventBus<OnDeath>.AddBinding(e.transform.GetInstanceID());
                     EventBus<OnDeath>.AddActions(e.transform.GetInstanceID(), OnEntityDeath);
                     e.gameObject.SetActive(true);
                 }
@@ -98,7 +96,6 @@ namespace Levels
         }
         public void OnEntityDeath(OnDeath @event)
         {
-            EventBus<OnDeath>.RemoveActions(@event.EntityBase.transform.GetInstanceID(), OnEntityDeath);
             entityCount--;
             if (entityCount <= 0)
             {

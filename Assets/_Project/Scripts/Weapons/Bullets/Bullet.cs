@@ -1,6 +1,7 @@
 using Entity;
 using EventBus;
 using KBCore.Refs;
+using Levels;
 using Pooling;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,6 +54,11 @@ namespace Weapon
             {
                 duration = data.Duration;
             }
+            EventBus<PlayerDeath>.AddActions(0, null, Deactivate);
+        }
+        protected void Deactivate()
+        {
+            gameObject.SetActive(false);
         }
         protected virtual void OnEnable()
         {
