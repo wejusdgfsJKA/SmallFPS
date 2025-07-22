@@ -7,8 +7,8 @@ public static class GlobalPlayerConfig
     /// How fast can the player move.
     /// </summary>
     public static float PlayerSpeed { get; set; } = 10;
-    public static float JumpForce { get; set; } = 20;
-    public static float Gravity { get; set; } = .25f;
+    public static float JumpForce { get; set; } = 10;
+    public static float Gravity { get; set; } = .35f;
     /// <summary>
     /// At what distance can the player interact with an interactable.
     /// </summary>

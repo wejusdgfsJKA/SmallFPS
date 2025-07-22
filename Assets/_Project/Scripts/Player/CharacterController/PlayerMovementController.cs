@@ -13,6 +13,7 @@ public class PlayerMovementController : ValidatedMonoBehaviour
     [SerializeField] bool onSlope;
     RaycastHit slopeHit;
     Vector2 inputVector;
+    Vector3 gravity;
     [field: SerializeField] public float GroundCheckRadius { get; protected set; } = 0.4f;
     #endregion
 
@@ -52,20 +53,18 @@ public class PlayerMovementController : ValidatedMonoBehaviour
     }
     private void FixedUpdate()
     {
+        gravity = new Vector3(0, rb.velocity.y, 0);
         if (!Grounded)
         {
             //apply gravity
-            rb.velocity -= transform.up * GlobalPlayerConfig.Gravity * Time.fixedTime;
+            gravity -= transform.up * GlobalPlayerConfig.Gravity;
         }
         Vector3 dir = (transform.forward * inputVector.y + transform.right * inputVector.x).normalized * GlobalPlayerConfig.PlayerSpeed;
         if (onSlope)
         {
-            rb.velocity = new Vector3(0, rb.velocity.y, 0) + Vector3.ProjectOnPlane(dir, slopeHit.normal);
+            dir = Vector3.ProjectOnPlane(dir, slopeHit.normal);
         }
-        else
-        {
-            rb.velocity = new Vector3(dir.x, rb.velocity.y, dir.z);
-        }
+        rb.velocity = gravity + dir;
     }
     public void OnMove(Vector2 inputVector)
     {

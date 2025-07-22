@@ -99,17 +99,17 @@ public class InteractionController : ValidatedMonoBehaviour
     /// </summary>
     public void OnEscape()
     {
-        if (settingsScreen.activeSelf)
+        settingsScreen.SetActive(!settingsScreen.activeSelf);
+        if (!settingsScreen.activeSelf)
         {
-            GameManager.Instance.EnableMouse();
+            GameManager.Instance.DisableMouse();
             Time.timeScale = 1;
         }
         else
         {
-            GameManager.Instance.DisableMouse();
+            GameManager.Instance.EnableMouse();
             Time.timeScale = 0;
         }
-        settingsScreen.SetActive(!settingsScreen.activeSelf);
     }
     /// <summary>
     /// Fires when the MainMenu button is pressed in game.

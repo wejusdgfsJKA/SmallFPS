@@ -23,6 +23,7 @@ namespace Weapon
                 b = Instantiate(data.Prefab);
                 b.Init(data);
             }
+            b.transform.parent = null;
             return b;
         }
         public void Release(Bullet bullet)
@@ -33,6 +34,7 @@ namespace Weapon
         IEnumerator Reattach(Transform tr)
         {
             yield return null;
+            tr.parent = transform;
         }
     }
 }

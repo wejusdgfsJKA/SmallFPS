@@ -1,3 +1,4 @@
+using Entity;
 using EventBus;
 using Levels;
 using System.Collections;
@@ -42,12 +43,12 @@ public class GameManager : MonoBehaviour
         //we need to clear all buses
         ClearBuses();
     }
-    public void EnableMouse()
+    public void DisableMouse()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-    public void DisableMouse()
+    public void EnableMouse()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -72,15 +73,14 @@ public class GameManager : MonoBehaviour
     }
     public void NextLevel()
     {
-        int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
-        if (nextScene >= SceneManager.sceneCountInBuildSettings)
-        {
-            GoToMainMenu();
-        }
-        else
-        {
-            SceneManager.LoadScene(nextScene);
-        }
+        StartCoroutine(ChangeLevel());
+    }
+    IEnumerator ChangeLevel()
+    {
+        EntityManager.Instance.TerminateAll();
+        yield return null;
+        int nextScene = (SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings;
+        SceneManager.LoadScene(nextScene);
         Debug.LogError("Keep in mind that the current way of handling levels is brittle as fuck.");
     }
 }

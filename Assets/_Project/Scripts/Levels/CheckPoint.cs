@@ -19,8 +19,8 @@ namespace Levels
             {
                 ActiveCheckpoint?.gameObject.SetActive(false);
                 ActiveCheckpoint = this;
-                EventBus<CheckpointReached>.Raise(0, new CheckpointReached());
             }
+            EventBus<CheckpointReached>.Raise(0, new CheckpointReached());
         }
         private void OnDisable()
         {
