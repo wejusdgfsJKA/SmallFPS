@@ -21,7 +21,6 @@ namespace Levels
         [SerializeField] int entityCount;
         ISpawnStrategy spawnStrategy;
         [SerializeField] SpawnStrategyType spawnStrategyType;
-        [SerializeField] GameObject checkpoint;
         [SerializeField] protected UnityEvent onEncounterEnd, onEncounterStart, onEncounterReset;
         [field: SerializeField] public State CurrentState { get; private set; } = State.Waiting;
         [SerializeField] float initialDelay = 1, inBetweenDelay = 0;
@@ -108,10 +107,6 @@ namespace Levels
             {
                 CurrentState = State.Completed;
                 onEncounterEnd?.Invoke();
-                if (checkpoint)
-                {
-                    checkpoint.SetActive(true);
-                }
             }
         }
         protected void FinishEncounter()
