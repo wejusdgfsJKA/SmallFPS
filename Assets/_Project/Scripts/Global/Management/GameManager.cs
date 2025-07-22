@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        else
+        {
+            Destroy(gameObject);
+        }
         EventBus<CheckpointReached>.AddBinding(0);
         EventBus<PlayerDeath>.AddBinding(0);
     }

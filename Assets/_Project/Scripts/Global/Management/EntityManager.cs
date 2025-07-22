@@ -38,7 +38,7 @@ namespace Entity
             {
                 roster.Add(rosterEntries[i].Type, rosterEntries[i]);
             }
-            EventBus<PlayerDeath>.AddActions(0, null, EntityManager.Instance.TerminateAll);
+            EventBus<PlayerDeath>.AddActions(0, null, TerminateAll);
         }
         /// <summary>
         /// Register an existing entity. This should only be called in OnEnable in EntityBase.
@@ -70,13 +70,10 @@ namespace Entity
         /// <returns>An instance of the enemy if existing pool/roster entry was found, null otherwise</returns>
         public EntityBase Spawn(EntityType id, Vector3 position, Quaternion rotation)
         {
+            if (id == EntityType.Player && Player != null) return null;
             EntityBase e = multiPool.Get(id);
             if (e == null)
             {
-                if (id == EntityType.Player)
-                {
-                    int a = 1;
-                }
                 EntityData data;
                 if (roster.TryGetValue(id, out data))
                 {
@@ -111,13 +108,13 @@ namespace Entity
         /// <param name="entity">The entity that died.</param>
         public void DeRegister(EntityBase entity)
         {
+            AddToPool(entity);
+            Entities.Remove(entity.transform.GetInstanceID());
             if (entity.Type == EntityType.Player)
             {
                 Player = null;
-                EventBus<Levels.PlayerDeath>.Raise(0, new());
+                EventBus<PlayerDeath>.Raise(0, new());
             }
-            Entities.Remove(entity.transform.GetInstanceID());
-            AddToPool(entity);
         }
         public void TerminateAll()
         {

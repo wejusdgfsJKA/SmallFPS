@@ -22,6 +22,10 @@ namespace Levels
                 EventBus<CheckpointReached>.Raise(0, new CheckpointReached());
             }
         }
+        private void OnDisable()
+        {
+            EventBus<PlayerDeath>.RemoveActions(0, null, Respawn);
+        }
         public static void Respawn()
         {
             if (!ActiveCheckpoint)
@@ -42,7 +46,7 @@ namespace Levels
             yield return null;
             var p = EntityManager.Instance.Spawn(EntityType.Player, ActiveCheckpoint.transform);
             yield return null;
-            p.gameObject.SetActive(true);
+            p?.gameObject.SetActive(true);
         }
     }
 }

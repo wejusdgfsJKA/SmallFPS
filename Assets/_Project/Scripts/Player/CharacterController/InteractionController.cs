@@ -23,17 +23,11 @@ public class InteractionController : ValidatedMonoBehaviour
             {
                 if (value == null)
                 {
-                    if (interactionPrompt != null)
-                    {
-                        interactionPrompt.enabled = false;
-                    }
+                    interactionPrompt?.gameObject.SetActive(false);
                 }
                 else
                 {
-                    if (interactionPrompt != null)
-                    {
-                        interactionPrompt.enabled = true;
-                    }
+                    interactionPrompt?.gameObject.SetActive(true);
                 }
                 currentInteractable = value;
             }
