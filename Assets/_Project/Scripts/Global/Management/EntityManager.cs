@@ -1,7 +1,6 @@
 using EventBus;
 using Levels;
 using Pooling;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace Entity
@@ -112,17 +111,11 @@ namespace Entity
         {
             AddToPool(entity);
             Entities.Remove(entity.transform.GetInstanceID());
-            StartCoroutine(Reattach(entity.transform));
             if (entity.Type == EntityType.Player)
             {
                 Player = null;
                 EventBus<PlayerDeath>.Raise(0, new());
             }
-        }
-        IEnumerator Reattach(Transform tr)
-        {
-            yield return null;
-            tr.parent = transform;
         }
         public void TerminateAll()
         {

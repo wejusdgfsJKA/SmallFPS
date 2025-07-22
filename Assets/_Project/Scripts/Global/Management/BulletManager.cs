@@ -1,5 +1,4 @@
 using Pooling;
-using System.Collections;
 using UnityEngine;
 
 namespace Weapon
@@ -29,12 +28,6 @@ namespace Weapon
         public void Release(Bullet bullet)
         {
             multiPool.Release(bullet);
-            StartCoroutine(Reattach(bullet.transform));
-        }
-        IEnumerator Reattach(Transform tr)
-        {
-            yield return null;
-            tr.parent = transform;
         }
     }
 }

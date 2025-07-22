@@ -1,6 +1,5 @@
 using Entity;
 using EventBus;
-using Levels;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,9 +8,9 @@ using Weapon;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; protected set; }
+    public static GameManager ManagerPrefab { get; set; }
     protected void Awake()
     {
-        DontDestroyOnLoad(gameObject);
         if (Instance == null)
         {
             Instance = this;
@@ -20,8 +19,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        EventBus<CheckpointReached>.AddBinding(0);
-        EventBus<PlayerDeath>.AddBinding(0);
     }
     protected void OnEnable()
     {
@@ -58,18 +55,24 @@ public class GameManager : MonoBehaviour
         //probably save here as well
         SceneManager.LoadScene(0);
     }
-    public void SpawnPlayer()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void ResetTime()
     {
-        StartCoroutine(SpawnPlayerCoroutine());
+        Time.timeScale = 1;
     }
-    IEnumerator SpawnPlayerCoroutine()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void EnsureManagerExists()
     {
-        yield return new WaitUntil(() => Checkpoint.ActiveCheckpoint != null);
-        Checkpoint.Respawn();
+        if (Instance == null && ManagerPrefab != null)
+        {
+            Instance = Instantiate(ManagerPrefab);
+        }
     }
     public void RestartLevel()
     {
+        Debug.Log("Loading scene " + SceneManager.GetActiveScene().buildIndex);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
     }
     public void NextLevel()
     {

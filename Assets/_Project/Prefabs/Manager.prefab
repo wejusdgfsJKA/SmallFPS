@@ -126,6 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c7981d6b1821064b8d633151e6b60c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rosterEntries:
+  - {fileID: 11400000, guid: b122d84abdd1fc74581c25dc7c42288b, type: 2}
+  - {fileID: 11400000, guid: 22794d591f3f5c743b5ae3ae3a01569a, type: 2}
+  - {fileID: 11400000, guid: eb35dcb65e5b8cc469e07ba8474d7740, type: 2}
 --- !u!114 &3553409358394926863
 MonoBehaviour:
   m_ObjectHideFlags: 0
