@@ -203,7 +203,7 @@ namespace Weapon
             }
             else
             {
-                shootPoint.LookAt(transform.forward * 100);
+                shootPoint.LookAt(transform.position + transform.forward * 100);
             }
             b.transform.SetPositionAndRotation(shootPoint.position, shootPoint.rotation);
             b.Owner = transform.root;

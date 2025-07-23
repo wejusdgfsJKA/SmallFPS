@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     }
     public void ContinueGame()
     {
-
+        GameManager.Instance.LoadProgress();
     }
     public void ExitGame()
     {

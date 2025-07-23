@@ -2,6 +2,7 @@ using Entity;
 using EventBus;
 using Levels;
 using System.Collections;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; protected set; }
     public static GameManager ManagerPrefab { get; set; }
+    string saveFilePath => Path.Combine(Application.persistentDataPath, "save.dat");
     protected void Awake()
     {
         if (Instance == null)
@@ -79,6 +81,7 @@ public class GameManager : MonoBehaviour
     }
     public void NextLevel()
     {
+        Save(SceneManager.GetActiveScene().buildIndex + 1);
         StartCoroutine(ChangeLevel());
     }
     IEnumerator ChangeLevel()
@@ -88,5 +91,21 @@ public class GameManager : MonoBehaviour
         int nextScene = (SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings;
         SceneManager.LoadScene(nextScene);
         Debug.LogError("Keep in mind that the current way of handling levels is brittle as fuck.");
+    }
+    protected void Save(int nextLevel)
+    {
+        nextLevel = Mathf.Clamp(nextLevel, 1, SceneManager.sceneCountInBuildSettings - 1);
+        string json = JsonUtility.ToJson(new GameData(nextLevel));
+        File.WriteAllText(saveFilePath, json);
+    }
+    public void LoadProgress()
+    {
+        if (!File.Exists(saveFilePath))
+        {
+            SceneManager.LoadScene(1);
+        }
+        string json = File.ReadAllText(saveFilePath);
+        int nextScene = Mathf.Clamp(JsonUtility.FromJson<GameData>(json).NextLevel, 1, SceneManager.sceneCountInBuildSettings - 1);
+        SceneManager.LoadScene(nextScene);
     }
 }

@@ -54,14 +54,14 @@ namespace Weapon
             {
                 duration = data.Duration;
             }
-            EventBus<PlayerDeath>.AddActions(0, null, Deactivate);
         }
         protected void Deactivate()
         {
-            gameObject.SetActive(false);
+            gameObject?.SetActive(false);
         }
         protected virtual void OnEnable()
         {
+            EventBus<PlayerDeath>.AddActions(0, null, Deactivate);
             audioSource.Play();
             timeActivated = Time.time;
         }
@@ -75,6 +75,7 @@ namespace Weapon
             {
                 Debug.LogError("No BulletManager instance found!");
             }
+            EventBus<PlayerDeath>.RemoveActions(0, null, Deactivate);
         }
         protected void Update()
         {

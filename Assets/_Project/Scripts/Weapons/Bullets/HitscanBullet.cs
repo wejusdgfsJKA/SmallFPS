@@ -46,7 +46,7 @@ namespace Weapon
             }
             else
             {
-                lineRenderer?.SetPosition(1, transform.forward * range);
+                lineRenderer?.SetPosition(1, transform.position + transform.forward * range);
             }
         }
     }
