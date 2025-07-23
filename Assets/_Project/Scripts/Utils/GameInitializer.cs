@@ -1,5 +1,3 @@
-using EventBus;
-using Levels;
 using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
@@ -9,11 +7,5 @@ public class GameInitializer : MonoBehaviour
     {
         GameManager.ManagerPrefab = managerPrefab;
         Time.timeScale = 1;
-        RegisterBindings();
-    }
-    void RegisterBindings()
-    {
-        EventBus<CheckpointReached>.AddBinding(0);
-        EventBus<PlayerDeath>.AddBinding(0);
     }
 }

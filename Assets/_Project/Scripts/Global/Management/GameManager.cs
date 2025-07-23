@@ -1,5 +1,6 @@
 using Entity;
 using EventBus;
+using Levels;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -63,6 +64,8 @@ public class GameManager : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void EnsureManagerExists()
     {
+        EventBus<CheckpointReached>.AddBinding(0);
+        EventBus<PlayerDeath>.AddBinding(0);
         if (Instance == null && ManagerPrefab != null)
         {
             Instance = Instantiate(ManagerPrefab);
