@@ -20,7 +20,7 @@ namespace Entity
         /// </summary>
         protected MultiPool<EntityType, EntityBase> multiPool = new();
         /// <summary>
-        /// All entities the manager can spawn.
+        /// All the entities the manager can spawn.
         /// </summary>
         protected Dictionary<EntityType, EntityData> roster = new();
         /// <summary>
@@ -57,17 +57,23 @@ namespace Entity
             }
             return false;
         }
-        public EntityBase Spawn(EntityType entityType, Transform transform)
+        /// <summary>
+        /// Spawn a new enemy, or get one from the entity pool. The spawned enemy will be inactive.
+        /// </summary>
+        /// <param name="id">The id of the entity (it's Type, not its unique identifier).</param>
+        /// <param name="transform">The transform whose position and rotation the entity will inherit.</param>
+        /// <returns>An instance of the entity if existing pool/roster entry was found, null otherwise.</returns>
+        public EntityBase Spawn(EntityType id, Transform transform)
         {
-            return Spawn(entityType, transform.position, transform.rotation);
+            return Spawn(id, transform.position, transform.rotation);
         }
         /// <summary>
         /// Spawn a new enemy, or get one from the entity pool. The spawned enemy will be inactive.
         /// </summary>
-        /// <param name="id">The id of the enemy (it's Type, not its unique identifier).</param>
+        /// <param name="id">The id of the entity (it's Type, not its unique identifier).</param>
         /// <param name="position">Spawn position.</param>
         /// <param name="rotation">Spawn rotation.</param>
-        /// <returns>An instance of the enemy if existing pool/roster entry was found, null otherwise</returns>
+        /// <returns>An instance of the entity if existing pool/roster entry was found, null otherwise.</returns>
         public EntityBase Spawn(EntityType id, Vector3 position, Quaternion rotation)
         {
             if (id == EntityType.Player && Player != null) return null;
@@ -117,6 +123,9 @@ namespace Entity
                 EventBus<PlayerDeath>.Raise(0, new());
             }
         }
+        /// <summary>
+        /// Disable all active entities.
+        /// </summary>
         public void TerminateAll()
         {
             EntityBase[] entities = new EntityBase[Entities.Count];

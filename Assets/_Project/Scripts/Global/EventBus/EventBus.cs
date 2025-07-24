@@ -6,6 +6,9 @@ namespace EventBus
     public static class EventBus<T> where T : IEvent
     {
         static Dictionary<int, EventBinding<T>> bindings = new();
+        /// <summary>
+        /// Clear all bindings.
+        /// </summary>
         static void Clear()
         {
             foreach (var binding in bindings.Values)
@@ -14,6 +17,11 @@ namespace EventBus
             }
             bindings.Clear();
         }
+        /// <summary>
+        /// Raise an event with binding ID 0.
+        /// </summary>
+        /// <param name="event">The event to be raised.</param>
+        /// <returns>True if the binding was found and raised.</returns>
         public static bool Raise(T @event)
         {
             return Raise(0, @event);
@@ -21,7 +29,7 @@ namespace EventBus
         /// <summary>
         /// Raise a binding.
         /// </summary>
-        /// <param name="bindingId">The id of the binding.</param>
+        /// <param name="bindingId">The ID of the binding.</param>
         /// <param name="event">The value of the IEvent parameter.</param>
         /// <returns>True if the binding was found and raised.</returns>
         public static bool Raise(int bindingId, T @event)
@@ -34,11 +42,21 @@ namespace EventBus
             }
             return false;
         }
-        public static bool AddBinding(int id)
+        /// <summary>
+        /// Add a new binding with a given ID.
+        /// </summary>
+        /// <param name="id">The id of the binding to be added. Default 0.</param>
+        /// <returns>True if the binding was not already registered.</returns>
+        public static bool AddBinding(int id = 0)
         {
             return bindings.TryAdd(id, new());
         }
-        public static bool ClearBinding(int id)
+        /// <summary>
+        /// Clear a given binding.
+        /// </summary>
+        /// <param name="id">The id of the binding to be cleared. Default 0.</param>
+        /// <returns>True if the binding was found and cleared.</returns>
+        public static bool ClearBinding(int id = 0)
         {
             EventBinding<T> e;
             if (bindings.TryGetValue(id, out e))
@@ -48,7 +66,12 @@ namespace EventBus
             }
             return false;
         }
-        public static bool RemoveBinding(int id)
+        /// <summary>
+        /// Clear and remove a binding.
+        /// </summary>
+        /// <param name="id"T>The id of the binding to remove. Default 0.</param>
+        /// <returns>True if the binding was found and removed.</returns>
+        public static bool RemoveBinding(int id = 0)
         {
             EventBinding<T> binding;
             if (bindings.TryGetValue(id, out binding))

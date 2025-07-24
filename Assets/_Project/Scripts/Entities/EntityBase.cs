@@ -87,6 +87,10 @@ namespace Entity
             EventBus<OnDeath>.Raise(transform.GetInstanceID(), new OnDeath(dmgInfo, this));
             transform.root.gameObject.SetActive(false);
         }
+        /// <summary>
+        /// Registers event bindings for this entity, and adds the TakeDamage method to 
+        /// its TakeDamage event binding.
+        /// </summary>
         protected void RegisterEventBindings()
         {
             EventBus<OnHealthUpdated>.AddBinding(transform.GetInstanceID());
@@ -95,6 +99,9 @@ namespace Entity
             EventBus<TakeDamage>.AddBinding(transform.GetInstanceID());
             EventBus<TakeDamage>.AddActions(transform.GetInstanceID(), TakeDamage);
         }
+        /// <summary>
+        /// Clears all event bindings associated with this entity.
+        /// </summary>
         protected void ClearEventBindings()
         {
             EventBus<OnHealthUpdated>.ClearBinding(transform.GetInstanceID());

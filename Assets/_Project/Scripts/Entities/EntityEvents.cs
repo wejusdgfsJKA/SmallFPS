@@ -2,8 +2,14 @@ using EventBus;
 
 namespace Entity
 {
+    /// <summary>
+    /// Raise this to deal damage to an entity using its transform instance ID.
+    /// </summary>
     public struct TakeDamage : IEvent
     {
+        /// <summary>
+        /// Damage container.
+        /// </summary>
         public DmgInfo DmgInfo;
         public TakeDamage(DmgInfo DmgInfo)
         {

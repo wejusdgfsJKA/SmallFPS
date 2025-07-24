@@ -7,7 +7,14 @@ namespace Levels
 {
     public class Checkpoint : MonoBehaviour
     {
+        /// <summary>
+        /// The checkpoint which is currently active. If more than one checkpoint is active 
+        /// in the scene, something is wrong.
+        /// </summary>
         public static Checkpoint ActiveCheckpoint { get; protected set; }
+        /// <summary>
+        /// Fires right before the player respawns from this checkpoint.
+        /// </summary>
         [SerializeField] protected UnityEvent OnRespawn;
         private void Awake()
         {
@@ -17,6 +24,9 @@ namespace Levels
                 ActiveCheckpoint = null;
             }
         }
+        /// <summary>
+        /// Sets ActiveCheckpoint to null.
+        /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void ResetCheckpoint()
         {
@@ -39,6 +49,9 @@ namespace Levels
         {
             EventBus<PlayerDeath>.RemoveActions(0, null, Respawn);
         }
+        /// <summary>
+        /// Respawn the player at the active checkpoint.
+        /// </summary>
         public static void Respawn()
         {
             if (!ActiveCheckpoint)
@@ -48,6 +61,9 @@ namespace Levels
             }
             ActiveCheckpoint.LocalRespawn();
         }
+        /// <summary>
+        /// Respawn the player at this checkpoint.
+        /// </summary>
         void LocalRespawn()
         {
             StartCoroutine(RespawnCoroutine());

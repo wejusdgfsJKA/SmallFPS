@@ -11,19 +11,40 @@ namespace Levels
         #region Fields
         public enum State
         {
+            /// <summary>
+            /// The encounter hasn't been triggered.
+            /// </summary>
             Waiting,
+            /// <summary>
+            /// The encounter is in progress.
+            /// </summary>
             Running,
+            /// <summary>
+            /// The encounter is over.
+            /// </summary>
             Completed,
+            /// <summary>
+            /// The encounter is over and should not reset on player death.
+            /// </summary>
             Finished
         }
+        /// <summary>
+        /// The entities this encounter will spawn.
+        /// </summary>
         [SerializeField] List<EntityType> entities = new List<EntityType>();
+        /// <summary>
+        /// Where can the entities be spawned.
+        /// </summary>
         [SerializeField] List<Transform> spawnPoints;
         [SerializeField] int entityCount;
         ISpawnStrategy spawnStrategy;
         [SerializeField] SpawnStrategyType spawnStrategyType;
         [SerializeField] protected UnityEvent onEncounterEnd, onEncounterStart, onEncounterReset;
+        /// <summary>
+        /// State of the encounter.
+        /// </summary>
         [field: SerializeField] public State CurrentState { get; private set; } = State.Waiting;
-        [SerializeField] float initialDelay = 1, inBetweenDelay = 0;
+        [SerializeField] float initialSpawnDelay = 1, inBetweenSpawnDelay = 0;
         #endregion
         private void Awake()
         {
@@ -34,6 +55,10 @@ namespace Levels
             };
             RegisterActions();
         }
+        /// <summary>
+        /// Register encounter actions.
+        /// </summary>
+        /// <exception cref="System.Exception">Thrown if registration fails.</exception>
         protected void RegisterActions()
         {
             if (!EventBus<CheckpointReached>.AddActions(0, null, FinishEncounter))
@@ -45,6 +70,9 @@ namespace Levels
                 throw new System.Exception($"{this} unable to add action to PlayerDeath EventBus!");
             }
         }
+        /// <summary>
+        /// Clear encounter actions.
+        /// </summary>
         void ClearActions()
         {
             if (!EventBus<CheckpointReached>.RemoveActions(0, null, FinishEncounter))
@@ -56,6 +84,9 @@ namespace Levels
                 Debug.LogError($"{this} unable to remove action from PlayerDeath EventBus!");
             }
         }
+        /// <summary>
+        /// Reset this encounter.
+        /// </summary>
         public void ResetEncounter()
         {
             if (CurrentState != State.Waiting && CurrentState != State.Finished)
@@ -79,7 +110,7 @@ namespace Levels
         }
         IEnumerator SpawnEntities(bool enable = true)
         {
-            yield return new WaitForSeconds(initialDelay);
+            yield return new WaitForSeconds(initialSpawnDelay);
             for (int i = 0; i < entityCount; i++)
             {
                 //spawn this entity
@@ -90,18 +121,25 @@ namespace Levels
                     EventBus<OnDeath>.AddActions(e.transform.GetInstanceID(), OnEntityDeath);
                     e.gameObject.SetActive(true);
                 }
-                yield return new WaitForSeconds(inBetweenDelay);
+                yield return new WaitForSeconds(inBetweenSpawnDelay);
             }
         }
-        public void OnEntityDeath(OnDeath @event)
+        /// <summary>
+        /// Fires when an entity in the encounter dies.
+        /// </summary>
+        /// <param name="event">OnDeath event.</param>
+        public virtual void OnEntityDeath(OnDeath @event)
         {
             entityCount--;
             if (entityCount <= 0)
             {
-                OnEncounterEnd();
+                EndEncounter();
             }
         }
-        public void OnEncounterEnd()
+        /// <summary>
+        /// Ends the encounter.
+        /// </summary>
+        public void EndEncounter()
         {
             if (CurrentState == State.Running)
             {
@@ -109,6 +147,9 @@ namespace Levels
                 onEncounterEnd?.Invoke();
             }
         }
+        /// <summary>
+        /// Marks the encounter as finished.
+        /// </summary>
         protected void FinishEncounter()
         {
             if (CurrentState == State.Completed)

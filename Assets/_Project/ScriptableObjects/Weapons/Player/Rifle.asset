@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxAmmo: 10
   AmmoRecharge: 3
-  Cooldown: 0.5
-  FireCost: 1
+  Cooldown: 0.2
+  FireCost: 0.5
   AltFireCost: 5
   Bullet: {fileID: 11400000, guid: ffa834b67a5648c49bc7059a5ac4adc9, type: 2}
   AltBullet: {fileID: 11400000, guid: b8469a484abb1f44eb66f2a1049879bd, type: 2}

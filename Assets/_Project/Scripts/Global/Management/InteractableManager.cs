@@ -60,7 +60,7 @@ public class InteractableManager : MonoBehaviour
     {
         return interactables.Remove(transform.GetInstanceID());
     }
-    private void OnApplicationQuit()
+    private void OnDisable()
     {
         interactables.Clear();
     }

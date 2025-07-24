@@ -2,12 +2,12 @@ using EventBus;
 
 namespace Levels
 {
-    public struct CheckpointReached : IEvent
-    {
-
-    }
-    public struct PlayerDeath : IEvent
-    {
-
-    }
+    /// <summary>
+    /// Fires when the player reaches a checkpoint.
+    /// </summary>
+    public struct CheckpointReached : IEvent { }
+    /// <summary>
+    /// Fires when the player dies.
+    /// </summary>
+    public struct PlayerDeath : IEvent { }
 }

@@ -25,6 +25,10 @@ public class BTAgent : ValidatedMonoBehaviour
             los.Value = !Physics.Linecast(transform.position, player.Value.position, 1 << 0);
         }
     }
+    /// <summary>
+    /// Deal damage to a target. Only checks cooldown, NOT range!
+    /// </summary>
+    /// <param name="target">The target to deal damage to.</param>
     public void Melee(Transform target)
     {
         if (Time.time - lastAttacked >= attackCooldown)
@@ -33,10 +37,16 @@ public class BTAgent : ValidatedMonoBehaviour
             lastAttacked = Time.time;
         }
     }
+    /// <summary>
+    /// Stop the navmesh agent.
+    /// </summary>
     public void StopMoving()
     {
         agent.isStopped = true;
     }
+    /// <summary>
+    /// Stop the navmesh agent.
+    /// </summary>
     public void GoIdle()
     {
         StopMoving();
