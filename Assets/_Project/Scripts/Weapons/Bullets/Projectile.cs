@@ -40,7 +40,9 @@ namespace Weapon
                 OnHit(transform.position);
                 OnHit(other.transform.root);
                 gameObject.SetActive(false);
+                Debug.Log(other);
             }
+            
         }
     }
 }

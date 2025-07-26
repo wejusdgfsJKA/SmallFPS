@@ -520,7 +520,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 79671071}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: SpawnPoint (2)
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -1792,7 +1792,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 602015143}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: SpawnPoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -2174,7 +2174,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -36323,7 +36323,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1072595056}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: SpawnPoint (4)
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -36923,7 +36923,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1253947632}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: SpawnPoint (5)
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -37145,7 +37145,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1422644540}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: SpawnPoint (3)
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -38238,7 +38238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1655465573}
   - component: {fileID: 1655465572}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Encounter Arena
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38536,7 +38536,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1757676622}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -38817,7 +38817,7 @@ GameObject:
   - component: {fileID: 1812436075}
   - component: {fileID: 1812436074}
   - component: {fileID: 1812436073}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Chestie amusanta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
