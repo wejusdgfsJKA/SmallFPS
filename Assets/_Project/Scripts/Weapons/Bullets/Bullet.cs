@@ -62,7 +62,10 @@ namespace Weapon
         protected virtual void OnEnable()
         {
             EventBus<PlayerDeath>.AddActions(0, null, Deactivate);
-            audioSource.Play();
+            if (audioSource.clip != null)
+            {
+                audioSource.PlayOneShot(audioSource.clip);
+            }
             timeActivated = Time.time;
         }
         protected void OnDisable()
