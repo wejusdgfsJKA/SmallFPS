@@ -24,7 +24,7 @@ namespace Weapon
         /// <summary>
         /// All entities we have hit.
         /// </summary>
-        protected HashSet<int> hits = new HashSet<int>();
+        protected HashSet<int> hits = new();
         public override void Init(BulletData data)
         {
             base.Init(data);
