@@ -35,6 +35,8 @@ namespace Weapon
         }
         protected virtual void OnTriggerEnter(Collider other)
         {
+            //ignore trigger colliders
+            if (other.isTrigger) return;
             if (other.transform.root != dmgInfo.Source)
             {
                 OnHit(transform.position);
