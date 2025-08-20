@@ -26,9 +26,9 @@ public class InputReader : ScriptableObject, IPlayerActions, IInputReader
             if (inputActions == null)
             {
                 inputActions = new PlayerControls();
-                inputActions.Player.SetCallbacks(this);
-                inputActions.Enable();
             }
+            inputActions.Player.SetCallbacks(this);
+            inputActions.Enable();
             return inputActions;
         }
     }
